@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "baseUrl": "src",
+    "outDir": "build",
+    "target": "es2015",
+    "strict": true,
+    "typeRoots": [
+      "node_modules/@types",
+      "./src/phoenix.d.ts"
+    ],
+    "lib": [
+      "es2017"
+    ]
+  },
+  "exclude": [
+    "node_modules"
+  ]
+}
