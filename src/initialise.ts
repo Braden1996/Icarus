@@ -1,5 +1,6 @@
 import ScreenNode from './nodes/ScreenNode';
 import WindowNode from './nodes/WindowNode';
+import registerAllEvents from './events';
 
 function buildModel() {
   const screenModels = Screen.all().map(aScreen => {
@@ -22,5 +23,7 @@ function buildModel() {
 
 export default function initialise() {
   const screenModels = buildModel();
+  const screenModel = screenModels[0];
+  const allEvents = registerAllEvents(screenModel);
   Phoenix.log(JSON.stringify(screenModels));
 }

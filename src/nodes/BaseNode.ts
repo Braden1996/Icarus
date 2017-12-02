@@ -33,20 +33,7 @@ export default abstract class BaseNode {
     };
   }
 
-  abstract toString(): string
-
-  protected abstract getFrame(): Rectangle
-  protected abstract setFrame(rectangle: Rectangle): void
-
-  protected inLayout() {
-    return true;
-  }
-
-  protected getChildrenInLayout() {
-    return this.children.filter(child => child.inLayout());
-  }
-
-  protected doLayout() {
+  doLayout() {
     let { x, y, width, height } = this.getFrame();
 
     if (this.layout === LayoutAxis.Horizontal) {
@@ -71,6 +58,32 @@ export default abstract class BaseNode {
         y += height + child.extraSize + this.spacing;
       }
     }
+  }
+
+  doParentLayout() {
+    this.parent.doLayout();
+  }
+
+  find(comparisonFunction: (child: BaseNode) => boolean): BaseNode | undefined {
+    if (comparisonFunction(this)) return this;
+    for (let child of this.children) {
+      const found = child.find(comparisonFunction);
+      if (found) return found;
+    }
+    return undefined;
+  }
+
+  abstract toString(): string
+
+  protected abstract getFrame(): Rectangle
+  protected abstract setFrame(rectangle: Rectangle): void
+
+  protected inLayout() {
+    return true;
+  }
+
+  protected getChildrenInLayout() {
+    return this.children.filter(child => child.inLayout());
   }
 
   private getChildBaseSize(size: number) {
