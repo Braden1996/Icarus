@@ -13,6 +13,10 @@ export default abstract class BaseNode {
   private spacing = 16;
   private extraSize = 0;
 
+  remove() {
+    this.parent!.removeChild(this);
+  }
+
   addChild(node: BaseNode) {
     node.parent = this;
     this.children.push(node);
@@ -23,6 +27,12 @@ export default abstract class BaseNode {
     oldChild.parent = null;
     newChild.parent = this;
     this.children.map(child => child === oldChild ? newChild : oldChild);
+    this.doLayout();
+  }
+
+  removeChild(child: BaseNode) {
+    child.parent = null;
+    this.children = this.children.filter(c => c !== child);
     this.doLayout();
   }
 

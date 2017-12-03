@@ -8,6 +8,13 @@ function getWindowNode(screenModel: ScreenNode, theWindow: Window) {
   );
 }
 
+export function windowRemoveFromParent(screenModel: ScreenNode, theWindow: Window) {
+  const theWindowNode = getWindowNode(screenModel, theWindow);
+  if (theWindowNode !== undefined) {
+    theWindowNode.remove();
+  }
+}
+
 export function windowParentDoLayout(screenModel: ScreenNode, theWindow: Window) {
   const theWindowNode = getWindowNode(screenModel, theWindow);
   if (theWindowNode !== undefined) theWindowNode.doParentLayout();

@@ -1,6 +1,9 @@
 import ScreenNode from "../nodes/ScreenNode";
 
-import { windowParentDoLayout } from './common';
+import {
+  windowRemoveFromParent,
+  windowParentDoLayout
+} from './common';
 
 function registerAllEvents(screenModel: ScreenNode) {
   return {
@@ -9,6 +12,9 @@ function registerAllEvents(screenModel: ScreenNode) {
     }),
     unminimiseWindowParentDoLayout: Event.on('windowDidUnminimise', (theWindow) => {
       windowParentDoLayout(screenModel, theWindow);
+    }),
+    closeWindowRemoveFromLayout: Event.on('windowDidClose', (theWindow) => {
+      windowRemoveFromParent(screenModel, theWindow);
     }),
   }
 }
