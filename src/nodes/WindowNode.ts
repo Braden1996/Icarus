@@ -26,4 +26,10 @@ export default class WindowNode extends BaseNode {
   protected inLayout() {
     return !this.managedWindow.isMinimized();
   }
+
+  // Some windows aren't meant to be tiled.
+  static validWindow(managedWindow: Window) {
+    return managedWindow.isNormal()
+      && (managedWindow.isVisible() || managedWindow.isMinimized());
+  }
 }

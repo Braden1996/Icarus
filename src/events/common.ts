@@ -8,6 +8,19 @@ function getWindowNode(screenModel: ScreenNode, theWindow: Window) {
   );
 }
 
+function getScreenNode(screenModel: ScreenNode, theScreen: Screen) {
+  return screenModel.find((node: BaseNode) =>
+    node instanceof ScreenNode && node.isScreen(theScreen)
+  );
+}
+
+export function windowAdd(screenModel: ScreenNode, theWindow: Window) {
+  const theScreenNode = getScreenNode(screenModel, theWindow.screen()!);
+  if (theScreenNode !== undefined && WindowNode.validWindow(theWindow)) {
+    theScreenNode.addChild(new WindowNode(theWindow));
+  }
+}
+
 export function windowRemoveFromParent(screenModel: ScreenNode, theWindow: Window) {
   const theWindowNode = getWindowNode(screenModel, theWindow);
   if (theWindowNode !== undefined) {

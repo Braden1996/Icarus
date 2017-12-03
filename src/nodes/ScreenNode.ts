@@ -5,6 +5,10 @@ export default class ScreenNode extends BaseNode {
 
   constructor(private managedScreen: Screen) { super(); }
 
+  isScreen(aScreen: Screen) {
+    return this.managedScreen.hash() === aScreen.hash();
+  }
+
   toString() {
     return `Screen ${this.managedScreen.identifier()}`;
   }
