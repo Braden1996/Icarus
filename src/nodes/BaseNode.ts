@@ -7,7 +7,7 @@ enum LayoutAxis {
 }
 
 export default abstract class BaseNode {
-  protected parent: BaseNode;
+  protected parent: BaseNode | null;
   protected children: BaseNode[] = [];
   private layout: LayoutAxis = LayoutAxis.Horizontal;
   private spacing = 16;
@@ -20,7 +20,10 @@ export default abstract class BaseNode {
   }
 
   replaceChild(oldChild: BaseNode, newChild: BaseNode) {
+    oldChild.parent = null;
+    newChild.parent = this;
     this.children.map(child => child === oldChild ? newChild : oldChild);
+    this.doLayout();
   }
 
   // Used primarily for debugging.
@@ -61,7 +64,7 @@ export default abstract class BaseNode {
   }
 
   doParentLayout() {
-    this.parent.doLayout();
+    this.parent!.doLayout();
   }
 
   find(comparisonFunction: (child: BaseNode) => boolean): BaseNode | undefined {

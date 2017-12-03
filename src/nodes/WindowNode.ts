@@ -12,7 +12,7 @@ export default class WindowNode extends BaseNode {
     const newGroupNode = new GroupNode(this.getFrame());
     newGroupNode.addChild(this);
     newGroupNode.addChild(child);
-    this.parent.replaceChild(this, newGroupNode);
+    this.parent!.replaceChild(this, newGroupNode);
   }
 
   protected getFrame() {
