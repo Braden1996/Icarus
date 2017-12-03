@@ -4,7 +4,7 @@ import WindowNode from "../nodes/WindowNode";
 
 function getWindowNode(screenModel: ScreenNode, theWindow: Window) {
   return screenModel.find((node: BaseNode) =>
-    node instanceof WindowNode && node.managedWindow.hash() === theWindow.hash()
+    node instanceof WindowNode && node.isWindow(theWindow)
   );
 }
 

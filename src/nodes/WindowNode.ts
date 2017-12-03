@@ -2,7 +2,11 @@ import BaseNode from './BaseNode';
 import GroupNode from './GroupNode';
 
 export default class WindowNode extends BaseNode {
-  constructor(public managedWindow: Window) { super(); }
+  constructor(private managedWindow: Window) { super(); }
+
+  isWindow(aWindow: Window) {
+    return this.managedWindow.hash() === aWindow.hash();
+  }
 
   toString() {
     return `${this.managedWindow.title()}`;
