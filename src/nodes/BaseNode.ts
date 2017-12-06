@@ -9,9 +9,9 @@ enum LayoutAxis {
 export default abstract class BaseNode {
   protected parent: BaseNode | null;
   protected children: BaseNode[] = [];
-  private layout: LayoutAxis = LayoutAxis.Horizontal;
-  private spacing = 16;
-  private extraSize = 0;
+  protected layout: LayoutAxis = LayoutAxis.Horizontal;
+  protected spacing = 16;
+  protected extraSize = 0;
 
   remove() {
     this.parent!.removeChild(this);
@@ -75,6 +75,18 @@ export default abstract class BaseNode {
 
   doParentLayout() {
     this.parent!.doLayout();
+  }
+
+  toggleParentLayoutAxis() {
+    switch (this.parent!.layout) {
+      case LayoutAxis.Horizontal:
+        this.parent!.layout = LayoutAxis.Vertical;
+        break;
+      case LayoutAxis.Vertical:
+        this.parent!.layout = LayoutAxis.Horizontal;
+        break;
+    }
+    this.doParentLayout();
   }
 
   find(comparisonFunction: (child: BaseNode) => boolean): BaseNode | undefined {

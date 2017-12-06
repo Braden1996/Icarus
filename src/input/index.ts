@@ -1,6 +1,7 @@
 import ScreenNode from "../nodes/ScreenNode";
 
 import DIRECTIONS from './direction';
+import { toggleAxis } from './layout';
 import { swapWindow } from './nodes';
 
 const { LEFT, TOP, BOTTOM, RIGHT } = DIRECTIONS;
@@ -13,6 +14,7 @@ function registerAllInput(screenModel: ScreenNode) {
     swapTop: Key.on('j', modifier, () => swapWindow(screenModel, TOP)),
     swapBottom: Key.on('k', modifier, () => swapWindow(screenModel, BOTTOM)),
     swapRight: Key.on('l', modifier, () => swapWindow(screenModel, RIGHT)),
+    toggleAxis: Key.on('a', modifier, () => toggleAxis(screenModel)),
   }
 }
 
