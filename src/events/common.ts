@@ -1,18 +1,6 @@
-import BaseNode from "../nodes/BaseNode";
+import { getScreenNode, getWindowNode } from "../utils/nodeFinders";
 import ScreenNode from "../nodes/ScreenNode";
 import WindowNode from "../nodes/WindowNode";
-
-function getWindowNode(screenModel: ScreenNode, theWindow: Window) {
-  return screenModel.find((node: BaseNode) =>
-    node instanceof WindowNode && node.isWindow(theWindow)
-  );
-}
-
-function getScreenNode(screenModel: ScreenNode, theScreen: Screen) {
-  return screenModel.find((node: BaseNode) =>
-    node instanceof ScreenNode && node.isScreen(theScreen)
-  );
-}
 
 export function windowAdd(screenModel: ScreenNode, theWindow: Window) {
   const theScreenNode = getScreenNode(screenModel, theWindow.screen()!);
