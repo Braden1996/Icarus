@@ -1,7 +1,7 @@
 import BaseNode from './BaseNode';
 
 export default class ScreenNode extends BaseNode {
-  private margin = 32;
+  protected outerGaps = 32;
 
   constructor(private managedScreen: Screen) { super(); }
 
@@ -13,14 +13,18 @@ export default class ScreenNode extends BaseNode {
     return `Screen ${this.managedScreen.identifier()}`;
   }
 
+  increaseOuterGaps(amount: number) {
+    this.outerGaps = Math.max(this.outerGaps + amount, 0);
+    this.doLayout();
+  }
+
+  increaseInnerGaps(amount: number) {
+    this.innerGaps = Math.max(this.innerGaps + amount, 0);
+    this.doLayout();
+  }
+
   protected getFrame() {
-    const { x, y, width, height } = this.managedScreen.visibleFrame();
-    return {
-      x: x + this.margin,
-      y: y + this.margin,
-      width: width - (2 * this.margin),
-      height: height - (2 * this.margin),
-    };
+    return this.applyOuterGaps(this.managedScreen.visibleFrame());
   }
 
   protected setFrame() {

@@ -7,10 +7,11 @@ enum LayoutAxis {
 }
 
 export default abstract class BaseNode {
-  protected parent: BaseNode | null;
+  parent: BaseNode | null;
   protected children: BaseNode[] = [];
   protected layout: LayoutAxis = LayoutAxis.Horizontal;
-  protected spacing = 16;
+  protected outerGaps = 0;
+  protected innerGaps = 16;
   protected extraSize = 0;
 
   remove() {
@@ -46,6 +47,16 @@ export default abstract class BaseNode {
     };
   }
 
+  increaseOuterGaps(amount: number) {
+    this.outerGaps = Math.max(this.outerGaps + amount, 0);
+    this.parent!.doLayout();
+  }
+
+  increaseInnerGaps(amount: number) {
+    this.innerGaps = Math.max(this.innerGaps + amount, 0);
+    this.parent!.doLayout();
+  }
+
   doLayout() {
     let { x, y, width, height } = this.getFrame();
 
@@ -66,9 +77,9 @@ export default abstract class BaseNode {
       });
 
       if (this.layout === LayoutAxis.Horizontal) {
-        x += width + child.extraSize + this.spacing;
+        x += width + child.extraSize + this.innerGaps;
       } else {
-        y += height + child.extraSize + this.spacing;
+        y += height + child.extraSize + this.innerGaps;
       }
     }
   }
@@ -102,6 +113,14 @@ export default abstract class BaseNode {
 
   protected abstract getFrame(): Rectangle
   protected abstract setFrame(rectangle: Rectangle): void
+  protected applyOuterGaps(frame: Rectangle) {
+    return {
+      x: frame.x + this.outerGaps,
+      y: frame.y + this.outerGaps,
+      width: frame.width - (2 * this.outerGaps),
+      height: frame.height - (2 * this.outerGaps),
+    };
+  }
 
   protected inLayout() {
     return true;
@@ -113,10 +132,10 @@ export default abstract class BaseNode {
 
   private getChildBaseSize(size: number) {
     const children = this.getChildrenInLayout();
-    const totalSpacing = this.spacing * (children.length - 1);
+    const totalinnerGaps = this.innerGaps * (children.length - 1);
     const totalChildExtraSize = children.reduce((a, c) => a + c.extraSize, 0);
     return Math.floor(
-      (size - totalChildExtraSize - totalSpacing) / children.length
+      (size - totalChildExtraSize - totalinnerGaps) / children.length
     );
   }
 }

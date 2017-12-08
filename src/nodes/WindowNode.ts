@@ -20,7 +20,7 @@ export default class WindowNode extends BaseNode {
   }
 
   protected getFrame() {
-    return this.managedWindow.frame();
+    return this.applyOuterGaps(this.managedWindow.frame());
   }
 
   protected setFrame(frame: Rectangle) {
