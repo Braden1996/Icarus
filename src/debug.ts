@@ -1,39 +1,20 @@
-const DEBUG_ENABLED = true;
+import CONFIG from './config';
 
 class DebugType {
-  constructor (public object: Object | Object[], public convert: (someVariable: any) => string) {}
+  constructor (
+    public object: Object | Object[],
+    public convert: (someVariable: any) => string
+  ) {}
 
   canConvert(someVariable: any) {
-    const objects = this.object instanceof Array ? this.object : [this.object];
-    return objects.find((obj: any) => someVariable instanceof obj) !== undefined;
+    const objects = Array.isArray(this.object) ? this.object : [this.object];
+    const findFunc = (obj: any) => someVariable instanceof obj;
+    return objects.find(findFunc) !== undefined;
   }
 }
 
+// TODO: add more DEBUG_TYPES!
 const DEBUG_TYPES = [
-  new DebugType(
-    Window,
-    (theWindow: Window) => debugAny({
-      type: 'Window',
-      title: theWindow.title(),
-      hash: theWindow.hash(),
-      isFullScreen: theWindow.isFullScreen(),
-      isMain: theWindow.isMain(),
-      isMinimized: theWindow.isMinimized(),
-      isNormal: theWindow.isNormal(),
-      isVisible: theWindow.isVisible(),
-    }),
-  ),
-  new DebugType(
-    App,
-    (app: App) => debugAny({
-      type: 'App',
-      name: app.name(),
-      hash: app.hash(),
-      isActive: app.isActive(),
-      isHidden: app.isHidden(),
-      isTerminated: app.isTerminated(),
-    })
-  ),
   new DebugType(
     [Array, Object],
     (json: any[] | Object) => JSON.stringify(json),
@@ -50,7 +31,7 @@ function debugAny(someVariable: any): string {
 }
 
 function output(toLog: string) {
-  if (DEBUG_ENABLED) Phoenix.log('DEBUG:' + toLog);
+  if (CONFIG.DEBUG_ENABLED) Phoenix.log('DEBUG:' + toLog);
 }
 
 export default function debug(...args: any[]) {

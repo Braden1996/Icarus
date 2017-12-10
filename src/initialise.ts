@@ -1,27 +1,35 @@
-import ScreenNode from './nodes/ScreenNode';
-import WindowNode from './nodes/WindowNode';
-import registerAllEvents from './events';
-import registerAllInput from './input';
-import { windowAdd } from './events/common';
+import CONFIG from './config';
+import registerAllEvents from './bindings/phoenix/events';
+import registerAllInput from './bindings/phoenix/input';
+import { PhoenixManagedWindow } from './bindings/phoenix/extension';
+import { windowAdd } from './model/events';
+import SyncedFrame from './model/frames/SyncedFrame';
+import WindowNode from './model/nodes/WindowNode';
+import ContainerNode from './model/nodes/ContainerNode';
+import { ScreenModels } from './model/utils/QueryModel';
 
 function buildModel() {
-  const screenModels = Screen.all().map(aScreen => {
-    const screenNode = new ScreenNode(aScreen);
+  const screenModels = <ScreenModels>{}
+
+  for (let aScreen of Screen.all()) {
+    const containerSyncedFrame = new SyncedFrame(aScreen.flippedVisibleFrame());
+    const screenContainerNode = new CONFIG.DEFAULT_CONTAINER(containerSyncedFrame);
 
     for (let w of aScreen.windows()){
-      windowAdd(screenNode, w);
+      const managedWindow = new PhoenixManagedWindow(w);
+      if (managedWindow.isValid()) {
+        windowAdd(screenContainerNode, managedWindow);
+      }
     }
 
-    return screenNode;
-  });
+    screenModels[aScreen.hash()] = screenContainerNode;
+  };
 
   return screenModels;
 }
 
 export default function initialise() {
-  const screenModels = buildModel();
-  const screenModel = screenModels[0];
-  const allEvents = registerAllEvents(screenModel);
-  const allInput = registerAllInput(screenModel);
-  Phoenix.log(JSON.stringify(screenModels));
+  const screenModels = { [Screen.main().hash()]: buildModel()[Screen.main().hash()] };
+  const allEvents = registerAllEvents(screenModels);
+  const allInput = registerAllInput(screenModels);
 }
