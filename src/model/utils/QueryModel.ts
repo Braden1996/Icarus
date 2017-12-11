@@ -36,7 +36,6 @@ class QueryModel {
     if (searchObject instanceof ManagedWindow) {
       return this.getWindowNode(model, <ManagedWindow>searchObject);
     }
-    return;
   }
 
   private getWindowNode(model: SyncedFrameNode, managedWindow: ManagedWindow) {

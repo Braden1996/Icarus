@@ -1,4 +1,3 @@
-import CONFIG from '../../config';
 import SyncedFrame from '../frames/SyncedFrame';
 import { QueryableType } from '../utils/QueryModel';
 import SyncedFrameNode from './SyncedFrameNode';
@@ -22,20 +21,13 @@ export default class WindowNode extends SyncedFrameNode {
     return this.managedWindow.toString();
   }
 
-  setFrame(frame: Rectangle) {
+  async setFrame(frame: Rectangle) {
     const boundFcn = this.managedWindow.syncPromise.bind(this.managedWindow);
-    super.setFrame(frame, boundFcn);
+    await super.setFrame(frame, boundFcn);
   }
 
   addChild(child: TreeNode) {
-    this.promoteToContainer();
-    this.parent!.addChild(child);
-  }
-
-  private promoteToContainer() {
-    const containerSyncedFrame = new SyncedFrame();
-    const newContainerNode = new CONFIG.DEFAULT_CONTAINER(containerSyncedFrame);
-    newContainerNode.addChild(this);
-    this.parent!.replaceChild(this, newContainerNode);
+    const newParent = this.createParentContainer();
+    newParent.addChild(child);
   }
 }

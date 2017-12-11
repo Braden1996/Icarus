@@ -3,19 +3,19 @@ import {
   cycleGapsMode,
   increaseGaps,
   decreaseGaps,
-  toggleAxis
+  toggleAxis,
+  mergeNode
 } from '../../model/input';
 import { ScreenModels } from '../../model/utils/QueryModel';
+import DIRECTIONS from '../../model/utils/Directions';
 import { getFocussedWindow } from './utils';
+
+const { LEFT, TOP, BOTTOM, RIGHT } = DIRECTIONS;
 
 const modifier = <Phoenix.ModifierKey[]>[ 'ctrl', 'shift', 'alt' ];
 
 function registerAllInput(models: ScreenModels) {
   return {
-    toggleAxis: Key.on('a', modifier, () => {
-      const focussedWindow = getFocussedWindow();
-      if (focussedWindow) toggleAxis(models, focussedWindow);
-    }),
     cycleGapsMode: Key.on('g', modifier, () => cycleGapsMode()),
     increaseGaps: Key.on('o', modifier, () => {
       const focussedWindow = getFocussedWindow();
@@ -24,6 +24,26 @@ function registerAllInput(models: ScreenModels) {
     decreaseGaps: Key.on('p', modifier, () => {
       const focussedWindow = getFocussedWindow();
       if (focussedWindow) decreaseGaps(models, focussedWindow);
+    }),
+    toggleAxis: Key.on('a', modifier, () => {
+      const focussedWindow = getFocussedWindow();
+      if (focussedWindow) toggleAxis(models, focussedWindow);
+    }),
+    mergeNodeLeft: Key.on('h', modifier, () => {
+      const focussedWindow = getFocussedWindow();
+      if (focussedWindow) mergeNode(models, focussedWindow, LEFT);
+    }),
+    mergeNodeTop: Key.on('j', modifier, () => {
+      const focussedWindow = getFocussedWindow();
+      if (focussedWindow) mergeNode(models, focussedWindow, TOP);
+    }),
+    mergeNodeBottom: Key.on('k', modifier, () => {
+      const focussedWindow = getFocussedWindow();
+      if (focussedWindow) mergeNode(models, focussedWindow, BOTTOM);
+    }),
+    mergeNodeRight: Key.on('l', modifier, () => {
+      const focussedWindow = getFocussedWindow();
+      if (focussedWindow) mergeNode(models, focussedWindow, RIGHT);
     }),
   }
 }

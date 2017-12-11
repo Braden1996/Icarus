@@ -29,31 +29,39 @@ export default class TileNode extends ContainerNode {
   }
 
   doLayout() {
-    const baseFrame = this.calculateInitialBaseFrame();
-    for (let child of this.getChildrenToLayout()) {
-      const childFrame = this.calculateChildFrame(child, baseFrame);
-      child.setFrame(childFrame);
-      this.updateBaseFrame(childFrame, baseFrame);
-    }
-  }
-
-  private calculateTotalUsableSize(children: SyncedFrameNode[]) {
-    const totalInnerGaps = this.innerGaps * (children.length - 1);
-    const totalChildExtraSize = children
-      .reduce((total, child) => total + this.getExtraSize(child), 0);
-    const { width, height } = this.getFrame();
-    return this.horizontalLayout
-      ? {
-        width: width - totalChildExtraSize - totalInnerGaps,
-        height
-      } : {
-        width,
-        height: height - totalChildExtraSize - totalInnerGaps,
-      }
-  }
-
-  private calculateInitialBaseFrame(): Rectangle {
     const children = this.getChildrenToLayout();
+    const childFrames = this.calculateChildFrames(children);
+    children.forEach(async (child, i) => {
+      const childFrame = childFrames[i];
+      await child.setFrame(childFrame);
+      if (child instanceof ContainerNode) child.doLayout();
+    });
+  }
+
+  private calculateChildFrames(children: SyncedFrameNode[]): Rectangle[] {
+    const baseFrame = this.calculateInitialBaseFrame(children);
+    const childFrames = children.map(child => {
+      const childFrame = this.calculateChildFrame(child, baseFrame);
+      this.updateBaseFrame(childFrame, baseFrame);
+      return childFrame;
+    });
+    return childFrames;
+  }
+
+  private calculateChildFrame(
+    child: SyncedFrameNode,
+    baseFrame: Rectangle,
+  ): Rectangle {
+    const frame = Object.assign({}, baseFrame);
+    if (this.horizontalLayout) {
+      frame.width += this.getExtraSize(child);
+    } else {
+      frame.height += this.getExtraSize(child);
+    }
+    return frame;
+  }
+
+  private calculateInitialBaseFrame(children: SyncedFrameNode[]): Rectangle {
     const { x, y } = this.getFrame();
     const { width, height } = this.calculateTotalUsableSize(children);
     return Object.assign({
@@ -70,24 +78,26 @@ export default class TileNode extends ContainerNode {
     );
   }
 
-  private calculateChildFrame(
-    child: SyncedFrameNode,
-    baseFrame: Rectangle,
-  ): Rectangle {
-    const frame = Object.assign({}, baseFrame);
-    if (this.horizontalLayout) {
-      frame.width += this.getExtraSize(child);
-    } else {
-      frame.height += this.getExtraSize(child);
-    }
-    return frame;
-  }
-
   private updateBaseFrame(lastChildFrame: Rectangle, baseFrame: Rectangle) {
     if (this.horizontalLayout) {
       baseFrame.x += lastChildFrame.width + this.innerGaps;
     } else {
       baseFrame.y += lastChildFrame.height + this.innerGaps;
     }
+  }
+
+  private calculateTotalUsableSize(children: SyncedFrameNode[]) {
+    const totalInnerGaps = this.innerGaps * (children.length - 1);
+    const totalChildExtraSize = children
+      .reduce((total, child) => total + this.getExtraSize(child), 0);
+    const { width, height } = this.getFrame();
+    return this.horizontalLayout
+      ? {
+        width: width - totalChildExtraSize - totalInnerGaps,
+        height
+      } : {
+        width,
+        height: height - totalChildExtraSize - totalInnerGaps,
+      }
   }
 }

@@ -43,6 +43,7 @@ export default abstract class TreeNode {
   }
 
   insertChild(child: TreeNode, index: number) {
+    if (child.parent) child.parent.removeChild(child);
     child.parent = this;
     this.children.splice(index, 0, child);
   }

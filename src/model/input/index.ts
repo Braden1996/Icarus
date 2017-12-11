@@ -4,3 +4,4 @@ export {
   decreaseGaps
 } from './gaps';
 export { toggleAxis } from './layout';
+export { mergeNode } from './merge';
