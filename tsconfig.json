@@ -5,6 +5,7 @@
     "baseUrl": "src",
     "outDir": "build",
     "target": "es2015",
+    "sourceMap": true,
     "strict": true,
     "typeRoots": [
       "node_modules/@types",
