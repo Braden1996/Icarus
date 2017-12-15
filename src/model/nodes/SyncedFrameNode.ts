@@ -4,9 +4,6 @@ import ContainerNode from './ContainerNode'
 import TreeNode from './TreeNode';
 import TileNode from './TileNode';
 
-const instantResolve = (rect: Rectangle) =>
-  new Promise<Rectangle>(resolve => resolve(rect));
-
 export default abstract class SyncedFrameNode extends TreeNode {
   hidden = false;
   protected _outerGaps = 0;
@@ -42,13 +39,13 @@ export default abstract class SyncedFrameNode extends TreeNode {
     return newContainerNode;
   }
 
-  async setFrame(frame: Rectangle, setPromise: setSyncPromise = instantResolve) {
+  setFrame(frame: Rectangle) {
     const paddedFrame = {
       x: frame.x + this.outerGaps,
       y: frame.y + this.outerGaps,
       width: frame.width - (2 * this.outerGaps),
       height: frame.height - (2 * this.outerGaps),
     }
-    await this.syncedFrame.set(paddedFrame, setPromise);
+    return this.syncedFrame.set(paddedFrame);
   }
 }

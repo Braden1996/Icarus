@@ -1,4 +1,7 @@
-import { PhoenixManagedWindow } from './extension';
+import {
+  PhoenixManagedWindow,
+  getPhoenixManagedWindowSyncPromise,
+} from './extension';
 import ContainerNode from "../../model/nodes/ContainerNode";
 import {
   windowAdd,
@@ -27,7 +30,10 @@ function registerAllEvents(models: ScreenModels) {
       const currentScreen = getFocussedScreen(models);
       if (!currentScreen) return;
       const managedWindow = new PhoenixManagedWindow(theWindow);
-      if (managedWindow.isValid()) windowAdd(currentScreen, managedWindow);
+      const syncPromise = getPhoenixManagedWindowSyncPromise(managedWindow);
+      if (managedWindow.isValid()) {
+        windowAdd(currentScreen, managedWindow, syncPromise);
+      }
     }),
   }
 }

@@ -1,7 +1,10 @@
 import CONFIG from './config';
 import registerAllEvents from './bindings/phoenix/events';
 import registerAllInput from './bindings/phoenix/input';
-import { PhoenixManagedWindow } from './bindings/phoenix/extension';
+import {
+  PhoenixManagedWindow,
+  getPhoenixManagedWindowSyncPromise,
+} from './bindings/phoenix/extension';
 import { windowAdd } from './model/events';
 import SyncedFrame from './model/frames/SyncedFrame';
 import WindowNode from './model/nodes/WindowNode';
@@ -17,8 +20,9 @@ function buildModel() {
 
     for (let w of aScreen.windows()){
       const managedWindow = new PhoenixManagedWindow(w);
+      const syncPromise = getPhoenixManagedWindowSyncPromise(managedWindow);
       if (managedWindow.isValid()) {
-        windowAdd(screenContainerNode, managedWindow);
+        windowAdd(screenContainerNode, managedWindow, syncPromise);
       }
     }
 

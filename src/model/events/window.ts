@@ -1,10 +1,14 @@
-import SyncedFrame from "../frames/SyncedFrame";
+import SyncedFrame, { setSyncPromise } from "../frames/SyncedFrame";
 import ContainerNode from "../nodes/ContainerNode";
 import WindowNode, { ManagedWindow } from "../nodes/WindowNode";
 import QueryModel, { ScreenModels } from "../utils/QueryModel";
 
-export function windowAdd(model: ContainerNode, theWindow: ManagedWindow) {
-  const syncedFrame = new SyncedFrame();
+export function windowAdd(
+  model: ContainerNode,
+  theWindow: ManagedWindow,
+  setFramePromise: setSyncPromise,
+) {
+  const syncedFrame = new SyncedFrame(undefined, setFramePromise);
   model.addChild(new WindowNode(syncedFrame, theWindow));
   model.doLayout();
 }
