@@ -7,14 +7,23 @@ export default class SyncedFrame {
 
   constructor(
     private syncedRectangle: Rectangle = { x: 0, y: 0, width: 0, height: 0 },
+    private readonly setSync: setSyncPromise
   ) {}
 
-  get(synced = true) {
+  get() {
+    return this.getSynced();
+  }
+
+  getSynced() {
     return Object.assign({}, this.syncedRectangle);
   }
 
-  async set(newRectangle: Rectangle, setSync: setSyncPromise) {
+  getToSync() {
+    return Object.assign({}, this.toSyncRectangle);
+  }
+
+  async set(newRectangle: Rectangle) {
     this.toSyncRectangle = Object.assign({}, newRectangle);
-    this.syncedRectangle = await setSync(this.toSyncRectangle);
+    this.syncedRectangle = await this.setSync(this.toSyncRectangle);
   }
 }
