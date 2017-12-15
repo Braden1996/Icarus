@@ -1,4 +1,4 @@
-import TreeNode from '../../src/model/nodes/TreeNode';
+import TreeNode from 'model/nodes/TreeNode';
 
 class TestTreeNode extends TreeNode {
   toString() {
