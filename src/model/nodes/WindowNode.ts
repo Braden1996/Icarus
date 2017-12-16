@@ -32,7 +32,9 @@ export default class WindowNode extends SyncedFrameNode {
   ): ContainerNode {
     const containerSyncedFrame = new SyncedFrame();
     const newContainerNode = new container(containerSyncedFrame);
-    this.parent!.replaceChild(this, newContainerNode);
+
+    if (this.parent) this.parent.replaceChild(this, newContainerNode);
+
     newContainerNode.addChild(this);
     return newContainerNode;
   }
