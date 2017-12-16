@@ -24,14 +24,16 @@ export default class TileNode extends ContainerNode {
     this.extraSize[childIndex] = extraSize;
   }
 
-  doLayout() {
+  async doLayout() {
     const children = this.getChildrenToLayout();
     const childFrames = this.calculateChildFrames(children);
-    children.forEach(async (child, i) => {
+    await Promise.all(children.map(async (child, i) => {
       const childFrame = childFrames[i];
       await child.setFrame(childFrame);
-      if (child instanceof ContainerNode) child.doLayout();
-    });
+      if (child instanceof ContainerNode) {
+        await child.doLayout();
+      }
+    }));
   }
 
   private calculateChildFrames(children: SyncedFrameNode[]): Rectangle[] {

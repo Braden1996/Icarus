@@ -168,5 +168,18 @@ describe('TileNode', () => {
       expect(childNode2.getFrame()).toEqual(expectedChildFrame2);
       expect(childNode3.getFrame()).toEqual(expectedChildFrame3);
     });
+
+    it('should trigger doLayout for child who are ContainerFrames', async () => {
+      const realRootFrameRect = <Rectangle>{ x: 0, y: 0, width: 75, height: 75 };
+      const realRootSyncedFrame = new SyncedFrame(realRootFrameRect);
+      const realRootNode = new TileNode(realRootSyncedFrame);
+      realRootNode.addChild(rootNode);
+
+      const spy = jest.spyOn(rootNode, 'doLayout');
+
+      await realRootNode.doLayout();
+
+      expect(spy).toHaveBeenCalled();
+    });
   });
 });
