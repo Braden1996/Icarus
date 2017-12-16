@@ -39,10 +39,10 @@ export default class TileNode extends ContainerNode {
   }
 
   private calculateChildFrames(children: SyncedFrameNode[]): Rectangle[] {
-    const baseFrame = this.calculateInitialBaseFrame(children);
+    let baseFrame = this.calculateInitialBaseFrame(children);
     const childFrames = children.map(child => {
       const childFrame = this.calculateChildFrame(child, baseFrame);
-      this.updateBaseFrame(childFrame, baseFrame);
+      baseFrame = this.calculateNextBaseFrame(childFrame, baseFrame);
       return childFrame;
     });
     return childFrames;
@@ -78,12 +78,20 @@ export default class TileNode extends ContainerNode {
     );
   }
 
-  private updateBaseFrame(lastChildFrame: Rectangle, baseFrame: Rectangle) {
-    if (this.horizontalLayout) {
-      baseFrame.x += lastChildFrame.width + this.innerGaps;
-    } else {
-      baseFrame.y += lastChildFrame.height + this.innerGaps;
-    }
+  private calculateNextBaseFrame(lastChildFrame: Rectangle, baseFrame: Rectangle) {
+    const { x, y, width, height } = baseFrame;
+    return Object.assign({
+      width,
+      height
+    }, this.horizontalLayout
+      ? {
+        x: x + lastChildFrame.width + this.innerGaps,
+        y,
+      } : {
+        x,
+        y: y + lastChildFrame.height + this.innerGaps,
+      }
+    );
   }
 
   private calculateTotalUsableSize(children: SyncedFrameNode[]) {
