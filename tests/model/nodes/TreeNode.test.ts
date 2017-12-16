@@ -1,12 +1,15 @@
 import TreeNode from 'model/nodes/TreeNode';
 
-class TestTreeNode extends TreeNode {
-  toString() {
-    return 'TestTreeNode';
-  }
-}
+class TestTreeNode extends TreeNode {}
 
 describe('TreeNode', () => {
+  describe('toString()', () => {
+    it('should return name of class', () => {
+      const rootNode = new TestTreeNode();
+      expect(rootNode.toString()).toBe('TestTreeNode');
+    });
+  });
+
   describe('isEqual()', () => {
     it('recognises itself', () => {
       const rootNode = new TestTreeNode();

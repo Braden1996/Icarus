@@ -1,11 +1,7 @@
 import SyncedFrame from 'model/frames/SyncedFrame';
-import SyncedFrameNode from 'model/nodes/syncedFrameNode';
+import SyncedFrameNode from 'model/nodes/SyncedFrameNode';
 
-class TestSyncedFrameNode extends SyncedFrameNode {
-  toString() {
-    return 'SyncedFrameNode';
-  }
-}
+export class TestSyncedFrameNode extends SyncedFrameNode {}
 
 describe('SyncedFrameNode', () => {
   describe('getFrame()', () => {
@@ -35,6 +31,28 @@ describe('SyncedFrameNode', () => {
   });
 
   describe('outerGaps', () => {
+    it('should mark dirty if value is different', async () => {
+      const rootFrameRect = <Rectangle>{ x: 0, y: 0, width: 100, height: 100 };
+      const rootSyncedFrame = new SyncedFrame(rootFrameRect);
+      const rootNode = new TestSyncedFrameNode(rootSyncedFrame);
+
+      rootNode.outerGaps = 20;
+
+      expect(rootNode.isFrameDirty()).toBeTruthy();
+    });
+
+    it('should not mark dirty if value is the same', async () => {
+      const rootFrameRect = <Rectangle>{ x: 0, y: 0, width: 100, height: 100 };
+      const rootSyncedFrame = new SyncedFrame(rootFrameRect);
+      const rootNode = new TestSyncedFrameNode(rootSyncedFrame);
+
+      rootNode.outerGaps = 20;
+      rootNode.clean();
+      rootNode.outerGaps = 20;
+
+      expect(rootNode.isFrameDirty()).toBeFalsy();
+    });
+
     it('should set a padded frame to node\'s SyncedFrame', async () => {
       const rootFrameRect = <Rectangle>{ x: 0, y: 0, width: 100, height: 100 };
       const rootSyncedFrame = new SyncedFrame(rootFrameRect);
@@ -58,7 +76,7 @@ describe('SyncedFrameNode', () => {
       expect(rootNode.getFrame()).toEqual(rootFrameRect);
     });
 
-    fit('should preserve outerGaps after frame change', async () => {
+    it('should preserve outerGaps after frame change', async () => {
       const rootFrameRect = <Rectangle>{ x: 0, y: 0, width: 100, height: 100 };
       const rootSyncedFrame = new SyncedFrame(rootFrameRect);
       const rootNode = new TestSyncedFrameNode(rootSyncedFrame);
