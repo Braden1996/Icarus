@@ -1,5 +1,5 @@
 import SyncedFrame from 'model/frames/SyncedFrame';
-import SyncedFrameNode from 'model/nodes/syncedFrameNode';
+import SyncedFrameNode from 'model/nodes/SyncedFrameNode';
 
 export class TestSyncedFrameNode extends SyncedFrameNode {}
 
