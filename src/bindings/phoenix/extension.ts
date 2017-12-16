@@ -1,15 +1,18 @@
 import { ManagedWindow } from "../../model/nodes/WindowNode";
 
+
+export function getPhoenixManagedWindowSyncPromise(
+  managedWindow: PhoenixManagedWindow
+) {
+  return (rect: Rectangle) => new Promise<Rectangle>((resolve) => {
+    const success = managedWindow.phoenixWindow.setFrame(rect);
+    resolve(rect);
+  });
+}
+
 export class PhoenixManagedWindow extends ManagedWindow {
   constructor(public readonly phoenixWindow: Window) {
     super();
-  }
-
-  syncPromise(rect: Rectangle) {
-    return new Promise<Rectangle>((resolve) => {
-      const success = this.phoenixWindow.setFrame(rect);
-      resolve(rect)
-    });
   }
 
   isEqual(otherPhoenixManagedWindow: this)  {
