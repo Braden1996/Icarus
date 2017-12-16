@@ -2,7 +2,7 @@ import SyncedFrame from 'model/frames/SyncedFrame';
 import ContainerNode from 'model/nodes/ContainerNode';
 import { TestSyncedFrameNode } from './SyncedFrameNode.test';
 
-class TestContainerNode extends ContainerNode {
+export class TestContainerNode extends ContainerNode {
   toString() {
     return 'TestContainerNode';
   }
