@@ -2,7 +2,9 @@ export default abstract class TreeNode {
   parent: TreeNode | null;
   private children: TreeNode[] = [];
 
-  abstract toString(): string
+  toString() {
+    return this.constructor.name;
+  }
 
   // Used primarily for debugging.
   toJSON(): any {

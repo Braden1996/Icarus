@@ -6,10 +6,6 @@ export default class TileNode extends ContainerNode {
   protected _innerGaps = 16;
   private extraSize: number[] = [];
 
-  toString() {
-    return 'TileNode';
-  }
-
   get innerGaps(): number {
     return this._innerGaps;
   }

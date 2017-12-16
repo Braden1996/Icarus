@@ -12,10 +12,6 @@ class TestManagedWindow extends ManagedWindow {
     return this.id === otherManagedWindow.id;
   }
 
-  toString() {
-    return this.id;
-  }
-
   isValid() {
     return this.id.length % 2 === 0;
   }

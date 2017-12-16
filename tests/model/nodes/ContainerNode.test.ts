@@ -3,10 +3,6 @@ import ContainerNode from 'model/nodes/ContainerNode';
 import { TestSyncedFrameNode } from './SyncedFrameNode.test';
 
 export class TestContainerNode extends ContainerNode {
-  toString() {
-    return 'TestContainerNode';
-  }
-
   doLayout() { return; }
 
   exposedGetChildrenToLayout() {
