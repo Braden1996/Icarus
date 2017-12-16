@@ -58,7 +58,7 @@ describe('SyncedFrameNode', () => {
       expect(rootNode.getFrame()).toEqual(rootFrameRect);
     });
 
-    fit('should preserve outerGaps after frame change', async () => {
+    it('should preserve outerGaps after frame change', async () => {
       const rootFrameRect = <Rectangle>{ x: 0, y: 0, width: 100, height: 100 };
       const rootSyncedFrame = new SyncedFrame(rootFrameRect);
       const rootNode = new TestSyncedFrameNode(rootSyncedFrame);
