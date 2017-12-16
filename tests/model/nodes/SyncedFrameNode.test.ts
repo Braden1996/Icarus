@@ -1,7 +1,7 @@
 import SyncedFrame from 'model/frames/SyncedFrame';
 import SyncedFrameNode from 'model/nodes/syncedFrameNode';
 
-class TestSyncedFrameNode extends SyncedFrameNode {
+export class TestSyncedFrameNode extends SyncedFrameNode {
   toString() {
     return 'SyncedFrameNode';
   }

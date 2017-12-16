@@ -1,8 +1,5 @@
-import CONFIG from '../../config';
-import SyncedFrame, { setSyncPromise } from '../frames/SyncedFrame';
-import ContainerNode from './ContainerNode'
+import SyncedFrame from '../frames/SyncedFrame';
 import TreeNode from './TreeNode';
-import TileNode from './TileNode';
 
 export default abstract class SyncedFrameNode extends TreeNode {
   hidden = false;
@@ -35,18 +32,6 @@ export default abstract class SyncedFrameNode extends TreeNode {
 
   clean() {
     return this.setFrame(this.getFrame());
-  }
-
-  // TODO: factor this function out of the node class.
-  createParentContainer(
-    container: new (syncedFrame: SyncedFrame) => ContainerNode
-      = CONFIG.DEFAULT_CONTAINER
-  ): ContainerNode {
-    const containerSyncedFrame = new SyncedFrame();
-    const newContainerNode = new container(containerSyncedFrame);
-    this.parent!.replaceChild(this, newContainerNode);
-    newContainerNode.addChild(this);
-    return newContainerNode;
   }
 
   setFrame(frame: Rectangle) {

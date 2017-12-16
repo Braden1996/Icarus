@@ -3,7 +3,7 @@ import SyncedFrameNode from './SyncedFrameNode';
 export default abstract class ContainerNode extends SyncedFrameNode {
   abstract doLayout(): void
 
-  removeChild(child: this) {
+  removeChild(child: SyncedFrameNode) {
     const children = this.getChildren();
     if (this.parent !== undefined && children.length === 1) {
       this.remove();
