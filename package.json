@@ -53,8 +53,8 @@
       "^.*\\.d\\.(ts|tsx)$"
     ],
     "coverageReporters": [
-      "json",
-      "text"
+      "text",
+      "text-summary"
     ]
   }
 }

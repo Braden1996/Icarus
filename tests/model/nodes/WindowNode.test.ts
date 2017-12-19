@@ -3,7 +3,7 @@ import WindowNode, { ManagedWindow } from 'model/nodes/WindowNode';
 import { TestContainerNode } from './ContainerNode.test';
 import ContainerNode from 'model/nodes/ContainerNode';
 
-class TestManagedWindow extends ManagedWindow {
+export class TestManagedWindow extends ManagedWindow {
   constructor(public readonly id: string) {
     super();
   }
