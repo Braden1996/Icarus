@@ -6,7 +6,7 @@ import QueryModel, { ScreenModels } from "../utils/QueryModel";
 export function windowAdd(
   model: ContainerNode,
   theWindow: ManagedWindow,
-  setFramePromise: setSyncPromise,
+  setFramePromise?: setSyncPromise,
 ) {
   const syncedFrame = new SyncedFrame(undefined, setFramePromise);
   model.addChild(new WindowNode(syncedFrame, theWindow));
@@ -19,6 +19,7 @@ export function windowRemoveFromParent(models: ScreenModels, theWindow: ManagedW
   if (theWindowNode === undefined) return;
 
   const parent = theWindowNode.parent;
+  theWindowNode.remove();
   (<ContainerNode>parent).doLayout();
 }
 
