@@ -15,6 +15,10 @@ export class TestManagedWindow extends ManagedWindow {
   isValid() {
     return this.id.length % 2 === 0;
   }
+
+  toString() {
+    return this.id;
+  }
 }
 
 
