@@ -4,8 +4,10 @@ import ModelConfigSchema, {
 
 export default interface ConfigSchema extends ModelConfigSchema {
   DEBUG_ENABLED: boolean;
+  DEBUG_JSON_SPACE: string | number;
 }
 
-export const defaultConfig: ModelConfigSchema = Object.assign({
+export const defaultConfig: ConfigSchema = Object.assign({
   DEBUG_ENABLED: false,
+  DEBUG_JSON_SPACE: 2,
 }, defaultModelConfig);

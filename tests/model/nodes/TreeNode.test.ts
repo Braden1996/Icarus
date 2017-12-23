@@ -10,6 +10,31 @@ describe('TreeNode', () => {
     });
   });
 
+  describe('toJSON()', () => {
+    it('should return object including string', () => {
+      const rootNode = new TestTreeNode();
+      const debugObject = rootNode.toJSON();
+      expect(debugObject.string).toBe('TestTreeNode');
+    });
+
+    it('should return object including array of children', () => {
+      const rootNode = new TestTreeNode();
+      const childNode = new TestTreeNode();
+      const childNode2 = new TestTreeNode();
+      const childNode3 = new TestTreeNode();
+
+      rootNode.addChild(childNode);
+      rootNode.addChild(childNode2);
+      childNode2.addChild(childNode3);
+
+      const debugObject = rootNode.toJSON();
+      expect(debugObject.children).toHaveLength(2);
+      expect(debugObject.children![0].children).toBeUndefined();
+      expect(debugObject.children![1].children).toHaveLength(1);
+      expect(debugObject.children![1].children![0].children).toBeUndefined();
+    });
+  });
+
   describe('isEqual()', () => {
     it('recognises itself', () => {
       const rootNode = new TestTreeNode();
