@@ -1,4 +1,4 @@
-import SyncedFrame from '../frames/SyncedFrame';
+import SyncedFrame, { Frame } from '../frames/SyncedFrame';
 import TreeNode from './TreeNode';
 
 export default abstract class SyncedFrameNode extends TreeNode {
@@ -9,7 +9,7 @@ export default abstract class SyncedFrameNode extends TreeNode {
 
   constructor(private syncedFrame: SyncedFrame) { super(); }
 
-  getFrame(): Rectangle {
+  getFrame(): Frame {
     const frame = this.syncedFrame.get();
     return this.removeOuterGaps(frame);
   }
@@ -34,14 +34,14 @@ export default abstract class SyncedFrameNode extends TreeNode {
     return this.setFrame(this.getFrame());
   }
 
-  setFrame(frame: Rectangle) {
+  setFrame(frame: Frame) {
     this.markCleanFrame();
 
     const paddedFrame = this.applyOuterGaps(frame);
     return this.syncedFrame.set(paddedFrame);
   }
 
-  private applyOuterGaps(frame: Rectangle) {
+  private applyOuterGaps(frame: Frame) {
     return {
       x: frame.x + this.outerGaps,
       y: frame.y + this.outerGaps,
@@ -50,7 +50,7 @@ export default abstract class SyncedFrameNode extends TreeNode {
     };
   }
 
-  private removeOuterGaps(frame: Rectangle) {
+  private removeOuterGaps(frame: Frame) {
     return {
       x: frame.x - this.outerGaps,
       y: frame.y - this.outerGaps,

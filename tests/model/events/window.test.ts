@@ -1,4 +1,4 @@
-import SyncedFrame from 'model/frames/SyncedFrame';
+import SyncedFrame, { Frame } from 'model/frames/SyncedFrame';
 import WindowNode, { ManagedWindow } from 'model/nodes/WindowNode';
 import TileNode from 'model/nodes/TileNode';
 import { TestManagedWindow } from '../nodes/WindowNode.test';
@@ -13,7 +13,7 @@ import QueryModel, { ScreenModels } from 'model/utils/QueryModel';
 describe('Window events', () => {
   describe('windowAdd()', () => {
     it('should create new WindowNode for the given ManagedWindow', () => {
-      const rootFrameRect = <Rectangle>{ x: 0, y: 0, width: 100, height: 100 };
+      const rootFrameRect = <Frame>{ x: 0, y: 0, width: 100, height: 100 };
       const rootSyncedFrame = new SyncedFrame(rootFrameRect);
       const rootNode = new TileNode(rootSyncedFrame);
 
@@ -29,7 +29,7 @@ describe('Window events', () => {
 
   describe('windowRemoveFromParent()', () => {
     it('should remove a WindowNode given its ManagedWindow', () => {
-      const rootFrameRect = <Rectangle>{ x: 0, y: 0, width: 100, height: 100 };
+      const rootFrameRect = <Frame>{ x: 0, y: 0, width: 100, height: 100 };
       const rootSyncedFrame = new SyncedFrame(rootFrameRect);
       const rootNode = new TileNode(rootSyncedFrame);
 
@@ -48,7 +48,7 @@ describe('Window events', () => {
 
   describe('windowMinimise()', () => {
     it('should hide a window a WindowNode given its ManagedWindow', () => {
-      const rootFrameRect = <Rectangle>{ x: 0, y: 0, width: 100, height: 100 };
+      const rootFrameRect = <Frame>{ x: 0, y: 0, width: 100, height: 100 };
       const rootSyncedFrame = new SyncedFrame(rootFrameRect);
       const rootNode = new TileNode(rootSyncedFrame);
 
@@ -66,7 +66,7 @@ describe('Window events', () => {
 
   describe('windowUninimise()', () => {
     it('should unhide a window a WindowNode given its ManagedWindow', () => {
-      const rootFrameRect = <Rectangle>{ x: 0, y: 0, width: 100, height: 100 };
+      const rootFrameRect = <Frame>{ x: 0, y: 0, width: 100, height: 100 };
       const rootSyncedFrame = new SyncedFrame(rootFrameRect);
       const rootNode = new TileNode(rootSyncedFrame);
 

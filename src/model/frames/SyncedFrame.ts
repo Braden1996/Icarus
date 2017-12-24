@@ -1,15 +1,22 @@
 import ContainerNode from "../nodes/ContainerNode";
 
-export type setSyncPromise = (rect: Rectangle) => Promise<Rectangle>;
+export interface Frame {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+}
 
-const instantResolve = (rect: Rectangle) =>
-  new Promise<Rectangle>(resolve => resolve(rect));
+export type setSyncPromise = (rect: Frame) => Promise<Frame>;
+
+const instantResolve = (rect: Frame) =>
+  new Promise<Frame>(resolve => resolve(rect));
 
 export default class SyncedFrame {
-  private toSyncRectangle: Rectangle;
+  private toSyncFrame: Frame;
 
   constructor(
-    private syncedRectangle: Rectangle = { x: 0, y: 0, width: 0, height: 0 },
+    private syncedFrame: Frame = { x: 0, y: 0, width: 0, height: 0 },
     private readonly setSync: setSyncPromise = instantResolve
   ) {}
 
@@ -18,15 +25,15 @@ export default class SyncedFrame {
   }
 
   getSynced() {
-    return Object.assign({}, this.syncedRectangle);
+    return Object.assign({}, this.syncedFrame);
   }
 
   getToSync() {
-    return Object.assign({}, this.toSyncRectangle);
+    return Object.assign({}, this.toSyncFrame);
   }
 
-  async set(newRectangle: Rectangle) {
-    this.toSyncRectangle = Object.assign({}, newRectangle);
-    this.syncedRectangle = await this.setSync(this.toSyncRectangle);
+  async set(newFrame: Frame) {
+    this.toSyncFrame = Object.assign({}, newFrame);
+    this.syncedFrame = await this.setSync(this.toSyncFrame);
   }
 }
