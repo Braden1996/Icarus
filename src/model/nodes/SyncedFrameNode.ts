@@ -16,11 +16,11 @@ export default abstract class SyncedFrameNode extends TreeNode {
   constructor(private syncedFrame: SyncedFrame) { super(); }
 
   toJSON(): SyncedFrameNodeJSON {
-    return Object.assign({
+    return Object.assign({}, super.toJSON(), {
       hidden: this.hidden,
       outerGaps: this.outerGaps,
       frame: this.syncedFrame.get(),
-    }, super.toJSON());
+    });
   }
 
   getFrame(): Frame {

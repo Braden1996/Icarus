@@ -18,9 +18,9 @@ export default class WindowNode extends SyncedFrameNode {
   ) { super(syncedFrame); }
 
   toJSON(): WindowNodeJSON {
-    return Object.assign({
+    return Object.assign({}, super.toJSON(), {
       managedWindow: this.managedWindow.toString(),
-    }, super.toJSON());
+    });
   }
 
   isWindow(compareWindow: ManagedWindow): boolean {

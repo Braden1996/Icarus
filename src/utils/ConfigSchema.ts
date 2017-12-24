@@ -7,7 +7,8 @@ export default interface ConfigSchema extends ModelConfigSchema {
   DEBUG_JSON_SPACE: string | number;
 }
 
-export const defaultConfig: ConfigSchema = Object.assign({
-  DEBUG_ENABLED: false,
-  DEBUG_JSON_SPACE: 2,
-}, defaultModelConfig);
+export const defaultConfig: ConfigSchema =
+  Object.assign({}, defaultModelConfig, {
+    DEBUG_ENABLED: false,
+    DEBUG_JSON_SPACE: 2,
+  });

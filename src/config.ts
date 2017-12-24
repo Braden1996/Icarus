@@ -1,7 +1,7 @@
 import ConfigSchema, { defaultConfig } from './utils/ConfigSchema';
 
-const CONFIG: ConfigSchema = Object.assign({
+const CONFIG: ConfigSchema = Object.assign({}, defaultConfig, {
   DEBUG_ENABLED: true,
-}, defaultConfig);
+});
 
 export default CONFIG;
