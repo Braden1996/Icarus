@@ -1,15 +1,14 @@
-import CONFIG from './config';
-import registerAllEvents from './bindings/phoenix/events';
-import registerAllInput from './bindings/phoenix/input';
-import {
-  PhoenixManagedWindow,
+import CONFIG from 'config';
+import { windowAdd } from 'model/events';
+import SyncedFrame from 'model/frames/SyncedFrame';
+import WindowNode from 'model/nodes/WindowNode';
+import ContainerNode from 'model/nodes/ContainerNode';
+import { ScreenModels } from 'model/utils/QueryModel';
+import registerAllEvents from './events';
+import registerAllInput from './input';
+import PhoenixManagedWindow, {
   getPhoenixManagedWindowSyncPromise,
-} from './bindings/phoenix/extension';
-import { windowAdd } from './model/events';
-import SyncedFrame from './model/frames/SyncedFrame';
-import WindowNode from './model/nodes/WindowNode';
-import ContainerNode from './model/nodes/ContainerNode';
-import { ScreenModels } from './model/utils/QueryModel';
+} from '../utils/ManagedWindow';
 
 function buildModel() {
   const screenModels = <ScreenModels>{}

@@ -1,14 +1,14 @@
-import ContainerNode from "../../model/nodes/ContainerNode";
+import ContainerNode from "model/nodes/ContainerNode";
 import {
   cycleGapsMode,
   increaseGaps,
   decreaseGaps,
   toggleAxis,
   mergeNode
-} from '../../model/input';
-import { ScreenModels } from '../../model/utils/QueryModel';
-import DIRECTIONS from '../../model/utils/Directions';
-import { getFocussedWindow } from './utils';
+} from 'model/input';
+import { ScreenModels } from 'model/utils/QueryModel';
+import DIRECTIONS from 'model/utils/Directions';
+import { getFocussedWindow } from '../utils/helpers';
 
 const { LEFT, TOP, BOTTOM, RIGHT } = DIRECTIONS;
 

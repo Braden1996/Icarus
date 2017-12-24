@@ -1,16 +1,15 @@
-import {
-  PhoenixManagedWindow,
-  getPhoenixManagedWindowSyncPromise,
-} from './extension';
-import ContainerNode from "../../model/nodes/ContainerNode";
+import ContainerNode from "model/nodes/ContainerNode";
 import {
   windowAdd,
   windowRemoveFromParent,
   windowMinimise,
   windowUnminimise
-} from '../../model/events';
-import { ScreenModels } from '../../model/utils/QueryModel';
-import { getFocussedScreen } from './utils';
+} from 'model/events';
+import { ScreenModels } from 'model/utils/QueryModel';
+import PhoenixManagedWindow, {
+  getPhoenixManagedWindowSyncPromise,
+} from '../utils/ManagedWindow';
+import { getFocussedScreen } from '../utils/helpers';
 
 function registerAllEvents(models: ScreenModels) {
   return {

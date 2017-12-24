@@ -1,5 +1,5 @@
-import CONFIG from 'config';
-import { debug } from 'utils/debug';
+import CONFIG from 'phoenix/config';
+import { getDebugString as debug } from 'phoenix/utils/debug';
 
 describe('debug()', () => {
   let initialSpace: string | number;

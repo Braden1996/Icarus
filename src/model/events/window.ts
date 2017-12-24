@@ -1,4 +1,3 @@
-import debug from "../../utils/debug";
 import SyncedFrame, { setSyncPromise } from "../frames/SyncedFrame";
 import ContainerNode from "../nodes/ContainerNode";
 import WindowNode, { ManagedWindow } from "../nodes/WindowNode";
@@ -13,7 +12,6 @@ export function windowAdd(
   const theWindowNode = new WindowNode(syncedFrame, theWindow);
   model.addChild(theWindowNode);
   model.doLayout();
-  debug('Add window', theWindowNode);
 }
 
 export function windowRemoveFromParent(models: ScreenModels, theWindow: ManagedWindow) {
@@ -24,7 +22,6 @@ export function windowRemoveFromParent(models: ScreenModels, theWindow: ManagedW
   const parent = theWindowNode.parent;
   theWindowNode.remove();
   (<ContainerNode>parent).doLayout();
-  debug('Remove window', theWindowNode);
 }
 
 export function windowMinimise(models: ScreenModels, theWindow: ManagedWindow) {
@@ -34,7 +31,6 @@ export function windowMinimise(models: ScreenModels, theWindow: ManagedWindow) {
 
   theWindowNode.hidden = true;
   (<ContainerNode>theWindowNode.parent).doLayout();
-  debug('Minimise window', theWindowNode);
 }
 
 export function windowUnminimise(models: ScreenModels, theWindow: ManagedWindow) {
@@ -44,5 +40,4 @@ export function windowUnminimise(models: ScreenModels, theWindow: ManagedWindow)
 
   theWindowNode.hidden = false;
   (<ContainerNode>theWindowNode.parent).doLayout();
-  debug('Unminimise window', theWindowNode);
 }

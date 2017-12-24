@@ -9,7 +9,7 @@
     "strict": true,
     "typeRoots": [
       "node_modules/@types",
-      "./src/phoenix.d.ts"
+      "./src/bindings/phoenix/types.d.ts"
     ],
     "lib": [
       "es2017"
