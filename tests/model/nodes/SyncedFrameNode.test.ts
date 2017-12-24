@@ -4,6 +4,37 @@ import SyncedFrameNode from 'model/nodes/SyncedFrameNode';
 export class TestSyncedFrameNode extends SyncedFrameNode {}
 
 describe('SyncedFrameNode', () => {
+  describe('toJSON()', () => {
+    it('should return object including hidden property', () => {
+      const rootFrameRect = <Frame>{ x: 0, y: 0, width: 100, height: 100 };
+      const rootSyncedFrame = new SyncedFrame(rootFrameRect);
+      const rootNode = new TestSyncedFrameNode(rootSyncedFrame);
+
+      rootNode.hidden = true;
+
+      expect(rootNode.toJSON().hidden).toBeTruthy();
+    });
+
+    it('should return object including outerGaps property', async () => {
+      const rootFrameRect = <Frame>{ x: 0, y: 0, width: 100, height: 100 };
+      const rootSyncedFrame = new SyncedFrame(rootFrameRect);
+      const rootNode = new TestSyncedFrameNode(rootSyncedFrame);
+
+      rootNode.outerGaps = 10;
+      await rootNode.clean();
+
+      expect(rootNode.toJSON().outerGaps).toBe(10);
+    });
+
+    it('should return object including frame property', () => {
+      const rootFrameRect = <Frame>{ x: 0, y: 0, width: 100, height: 100 };
+      const rootSyncedFrame = new SyncedFrame(rootFrameRect);
+      const rootNode = new TestSyncedFrameNode(rootSyncedFrame);
+
+      expect(rootNode.toJSON().frame).toEqual(rootFrameRect);
+    });
+  });
+
   describe('getFrame()', () => {
     it('returns a copy of the frame rect', () => {
       const rootFrameRect = <Frame>{ x: 0, y: 0, width: 100, height: 100 };

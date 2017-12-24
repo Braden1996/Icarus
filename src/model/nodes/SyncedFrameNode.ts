@@ -1,5 +1,11 @@
 import SyncedFrame, { Frame } from '../frames/SyncedFrame';
-import TreeNode from './TreeNode';
+import TreeNode, { TreeNodeJSON } from './TreeNode';
+
+export interface SyncedFrameNodeJSON extends TreeNodeJSON {
+  hidden: boolean;
+  outerGaps: number;
+  frame: Frame;
+}
 
 export default abstract class SyncedFrameNode extends TreeNode {
   hidden = false;
@@ -8,6 +14,14 @@ export default abstract class SyncedFrameNode extends TreeNode {
   private outerGapsDirty = true;
 
   constructor(private syncedFrame: SyncedFrame) { super(); }
+
+  toJSON(): SyncedFrameNodeJSON {
+    return Object.assign({
+      hidden: this.hidden,
+      outerGaps: this.outerGaps,
+      frame: this.syncedFrame.get(),
+    }, super.toJSON());
+  }
 
   getFrame(): Frame {
     const frame = this.syncedFrame.get();
