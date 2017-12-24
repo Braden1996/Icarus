@@ -3,6 +3,50 @@ import TileNode from 'model/nodes/TileNode';
 import { TestSyncedFrameNode } from './SyncedFrameNode.test';
 
 describe('TileNode', () => {
+  describe('toJSON()', () => {
+    it('should return object including horizontalLayout property', () => {
+      const rootFrameRect = <Frame>{ x: 0, y: 0, width: 100, height: 100 };
+      const rootSyncedFrame = new SyncedFrame(rootFrameRect);
+      const rootNode = new TileNode(rootSyncedFrame);
+
+      rootNode.horizontalLayout = true;
+
+      expect(rootNode.toJSON().horizontalLayout).toBeTruthy();
+    });
+
+    it('should return object including innerGaps property', async () => {
+      const rootFrameRect = <Frame>{ x: 0, y: 0, width: 100, height: 100 };
+      const rootSyncedFrame = new SyncedFrame(rootFrameRect);
+      const rootNode = new TileNode(rootSyncedFrame);
+
+      rootNode.innerGaps = 10;
+      await rootNode.clean();
+
+      expect(rootNode.toJSON().innerGaps).toBe(10);
+    });
+
+    it('should return object including extraSize property', () => {
+      const rootFrameRect = <Frame>{ x: 0, y: 0, width: 100, height: 100 };
+      const rootSyncedFrame = new SyncedFrame(rootFrameRect);
+      const rootNode = new TileNode(rootSyncedFrame);
+
+      const childFrameRect1 = <Frame>{ x: 0, y: 0, width: 100, height: 100 };
+      const childSyncedFrame1 = new SyncedFrame(childFrameRect1);
+      const childNode1 = new TestSyncedFrameNode(childSyncedFrame1);
+      rootNode.addChild(childNode1);
+
+      const childFrameRect2 = <Frame>{ x: 50, y: 50, width: 150, height: 150 };
+      const childSyncedFrame2 = new SyncedFrame(childFrameRect2);
+      const childNode2 = new TestSyncedFrameNode(childSyncedFrame2);
+      rootNode.addChild(childNode2);
+
+      rootNode.setExtraSize(childNode1, 16);
+      rootNode.setExtraSize(childNode2, 8);
+      expect(rootNode.toJSON().extraSize[0]).toBe(16);
+      expect(rootNode.toJSON().extraSize[1]).toBe(8);
+    });
+  });
+
   describe('innerGaps', () => {
     it('should not allow for negative values', () => {
       const rootFrameRect = <Frame>{ x: 0, y: 0, width: 100, height: 100 };

@@ -1,10 +1,24 @@
 import ContainerNode from './ContainerNode';
-import SyncedFrameNode from './SyncedFrameNode';
+import SyncedFrameNode, { SyncedFrameNodeJSON } from './SyncedFrameNode';
+
+export interface TileNodeJSON extends SyncedFrameNodeJSON {
+  horizontalLayout: boolean;
+  innerGaps: number;
+  extraSize: number[];
+}
 
 export default class TileNode extends ContainerNode {
   horizontalLayout: boolean = true;
   protected _innerGaps = 16;
   private extraSize: number[] = [];
+
+  toJSON(): TileNodeJSON {
+    return Object.assign({
+      horizontalLayout: this.horizontalLayout,
+      innerGaps: this.innerGaps,
+      extraSize: this.extraSize,
+    }, super.toJSON());
+  }
 
   get innerGaps(): number {
     return this._innerGaps;
