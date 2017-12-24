@@ -2,8 +2,12 @@ import CONFIG from '../../config';
 import SyncedFrame from '../frames/SyncedFrame';
 import { QueryableType } from '../utils/QueryModel';
 import ContainerNode from './ContainerNode';
-import SyncedFrameNode from './SyncedFrameNode';
+import SyncedFrameNode, { SyncedFrameNodeJSON } from './SyncedFrameNode';
 import TreeNode from './TreeNode';
+
+export interface WindowNodeJSON extends SyncedFrameNodeJSON {
+  managedWindow: string;
+}
 
 export abstract class ManagedWindow extends QueryableType {}
 
@@ -12,6 +16,12 @@ export default class WindowNode extends SyncedFrameNode {
     syncedFrame: SyncedFrame,
     private readonly managedWindow: ManagedWindow,
   ) { super(syncedFrame); }
+
+  toJSON(): WindowNodeJSON {
+    return Object.assign({
+      managedWindow: this.managedWindow.toString(),
+    }, super.toJSON());
+  }
 
   isWindow(compareWindow: ManagedWindow): boolean {
     return this.managedWindow.isEqual(compareWindow);

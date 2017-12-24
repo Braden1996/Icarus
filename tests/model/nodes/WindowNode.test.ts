@@ -23,6 +23,18 @@ export class TestManagedWindow extends ManagedWindow {
 
 
 describe('WindowNode', () => {
+  describe('toJSON()', () => {
+    it('should return object including string', () => {
+      const managedWindow = new TestManagedWindow('test');
+
+      const windowFrameRect = <Frame>{ x: 0, y: 0, width: 50, height: 50 };
+      const windowSyncedFrame = new SyncedFrame(windowFrameRect);
+      const windowNode = new WindowNode(windowSyncedFrame, managedWindow);
+
+      expect(windowNode.toJSON().managedWindow).toBe('test');
+    });
+  });
+
   describe('isWindow()', () => {
     it('should return true if ManagedWindow says so', () => {
       const managedWindow = new TestManagedWindow('test');
