@@ -5,7 +5,7 @@ function variableToString(someVariable: any): string {
 }
 
 function output(toLog: string) {
-  if (CONFIG.DEBUG_ENABLED) Phoenix.log('DEBUG:' + toLog);
+  if (CONFIG.DEBUG_ENABLED) Phoenix.log('DEBUG: ' + toLog);
 }
 
 export function debug(...args: any[]) {
