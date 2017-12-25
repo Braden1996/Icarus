@@ -1,4 +1,4 @@
-import CONFIG from 'phoenix/config';
+import CONFIG from 'config';
 import { getDebugString as debug } from 'phoenix/utils/debug';
 
 describe('debug()', () => {

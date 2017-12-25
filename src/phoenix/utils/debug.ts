@@ -1,4 +1,4 @@
-import CONFIG from '../config';
+import CONFIG from 'config';
 
 function mapVariable(someVariable: any): any {
   return someVariable;
