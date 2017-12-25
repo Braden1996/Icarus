@@ -1,6 +1,42 @@
 import CONFIG from 'config';
+import { isApp, isWindow } from './typeGuards';
 
-function mapVariable(someVariable: any): any {
+function mapVariable(someVariable: any, depth = Infinity): any {
+  if (depth < 0) { return 'MAX DEPTH'}
+
+  if (isApp(someVariable)) {
+    const nextDepth = depth === Infinity ? 0 : depth - 1;
+    return {
+      type: 'App',
+      name: someVariable.name(),
+      hash: someVariable.hash(),
+      isActive: someVariable.isActive(),
+      isHidden: someVariable.isHidden(),
+      isTerminated: someVariable.isTerminated(),
+      windows: someVariable.windows()
+        .map(w => mapVariable(w, nextDepth)),
+    }
+  } else if (isWindow(someVariable)) {
+    const nextDepth = depth === Infinity ? 1 : depth - 1;
+    const app = mapVariable(someVariable.app(), nextDepth);
+    if (app instanceof Object) {
+      app.otherWindows = app.windows
+        .filter((w: any) => w.hash !== someVariable.hash());
+      delete app.windows;
+    }
+
+    return {
+      type: 'Window',
+      title: someVariable.title(),
+      hash: someVariable.hash(),
+      isFullScreen: someVariable.isFullScreen(),
+      isMain: someVariable.isMain(),
+      isMinimized: someVariable.isMinimized(),
+      isNormal: someVariable.isNormal(),
+      isVisible: someVariable.isVisible(),
+      app
+    };
+  }
   return someVariable;
 }
 
