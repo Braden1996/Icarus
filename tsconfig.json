@@ -4,7 +4,11 @@
     "moduleResolution": "node",
     "baseUrl": "src",
     "outDir": "build",
-    "target": "es2015",
+    "target": "es2017",
+    "strict": true,
+    "noFallthroughCasesInSwitch": true,
+    "pretty": true,
+    "stripInternal": true,
     "sourceMap": true,
     "strict": true,
     "typeRoots": [
@@ -12,7 +16,8 @@
       "./src/bindings/phoenix/types.d.ts"
     ],
     "lib": [
-      "es2017"
+      "es2017",
+      "esnext"
     ]
   },
   "exclude": [
