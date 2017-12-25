@@ -1,5 +1,5 @@
-import { ScreenModels } from '../../model/utils/QueryModel';
-import { PhoenixManagedWindow } from './extension';
+import { ScreenModels } from 'model/utils/QueryModel';
+import PhoenixManagedWindow from './ManagedWindow';
 
 export function getFocussedScreen(screenModels: ScreenModels) {
   const focussedScreen = Screen.main();

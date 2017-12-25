@@ -1,5 +1,4 @@
-import { ManagedWindow } from "../../model/nodes/WindowNode";
-
+import { ManagedWindow } from "model/nodes/WindowNode";
 
 export function getPhoenixManagedWindowSyncPromise(
   managedWindow: PhoenixManagedWindow
@@ -10,7 +9,7 @@ export function getPhoenixManagedWindowSyncPromise(
   });
 }
 
-export class PhoenixManagedWindow extends ManagedWindow {
+export default class PhoenixManagedWindow extends ManagedWindow {
   constructor(public readonly phoenixWindow: Window) {
     super();
   }

@@ -5,28 +5,21 @@
   "scripts": {
     "test": "jest",
     "test:coverage": "jest --coverage",
-    "dev": "gulp"
+    "build": "webpack",
+    "develop": "webpack --watch"
   },
   "author": "Braden Marshall <braden1996@hotmail.co.uk>",
   "license": "ISC",
   "description": "",
-  "dependencies": {},
+  "dependencies": {
+    "ts-loader": "^3.2.0",
+    "typescript": "^2.6.2",
+    "webpack": "^3.10.0"
+  },
   "devDependencies": {
     "@types/jest": "^21.1.8",
-    "babel-core": "^6.26.0",
-    "babel-preset-env": "^1.6.0",
-    "babel-preset-es2015": "^6.24.1",
-    "babelify": "^7.3.0",
-    "browserify": "^14.4.0",
-    "gulp": "^3.9.1",
-    "gulp-babel": "^7.0.0",
     "jest": "^21.2.1",
-    "ts-jest": "^21.2.4",
-    "tsify": "^3.0.3",
-    "typescript": "^2.6.1",
-    "vinyl-buffer": "^1.0.0",
-    "vinyl-source-stream": "^1.1.0",
-    "watchify": "^3.9.0"
+    "ts-jest": "^21.2.4"
   },
   "jest": {
     "transform": {

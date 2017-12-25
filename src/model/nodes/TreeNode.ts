@@ -1,3 +1,8 @@
+export interface TreeNodeJSON {
+  string: string;
+  children: TreeNodeJSON[] | undefined;
+}
+
 export default abstract class TreeNode {
   parent: TreeNode | null;
   private children: TreeNode[] = [];
@@ -6,8 +11,7 @@ export default abstract class TreeNode {
     return this.constructor.name;
   }
 
-  // Used primarily for debugging.
-  toJSON(): any {
+  toJSON(): TreeNodeJSON {
     return {
       string: this.toString(),
       children: this.children.length > 0
