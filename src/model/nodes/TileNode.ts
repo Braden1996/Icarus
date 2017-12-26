@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+import CONFIG from 'config';
+>>>>>>> 436c51e... Fix bug causing `CONFIG.DEFAULT_CONTAINER` to be `undefined`.
 import DIRECTIONS, { HORIZONTAL_DIRECTIONS } from '../utils/Directions';
 import ContainerNode from './ContainerNode';
 import SyncedFrameNode, { SyncedFrameNodeJSON } from './SyncedFrameNode';
@@ -147,9 +151,7 @@ export default class TileNode extends ContainerNode {
         [DIRECTIONS.LEFT, DIRECTIONS.TOP].includes(direction) ? -1 : 1;
       const index = theNodeIndex + adjacentOffset
 
-      if (index >= 0 && index < children.length) {
-        return children[index];
-      }
+      if (index >= 0 && index < children.length) return children[index];
     }
 
     return this.parent === undefined

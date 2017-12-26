@@ -1,4 +1,4 @@
-import CONFIG from '../../config';
+import CONFIG from 'config';
 import SyncedFrame from '../frames/SyncedFrame';
 import { QueryableType } from '../utils/QueryModel';
 import ContainerNode from './ContainerNode';
@@ -36,12 +36,8 @@ export default class WindowNode extends SyncedFrameNode {
     newParent.addChild(child);
   }
 
-  private createParentContainer(
-    container: new (syncedFrame: SyncedFrame) => ContainerNode
-      = CONFIG.DEFAULT_CONTAINER
-  ): ContainerNode {
-    const containerSyncedFrame = new SyncedFrame();
-    const newContainerNode = new container(containerSyncedFrame);
+  private createParentContainer(): ContainerNode {
+    const newContainerNode = new CONFIG.DEFAULT_CONTAINER(new SyncedFrame());
 
     if (this.parent) this.parent.replaceChild(this, newContainerNode);
 

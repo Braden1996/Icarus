@@ -1,7 +1,12 @@
+import DIRECTIONS from '../utils/Directions';
 import SyncedFrameNode from './SyncedFrameNode';
 
 export default abstract class ContainerNode extends SyncedFrameNode {
   abstract doLayout(): void
+  abstract getInDirection(
+    fromChild: SyncedFrameNode,
+    direction: DIRECTIONS
+  ): SyncedFrameNode | undefined
 
   removeChild(child: SyncedFrameNode) {
     super.removeChild(child);

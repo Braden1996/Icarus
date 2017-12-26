@@ -1,9 +1,15 @@
 import SyncedFrame, { Frame } from 'model/frames/SyncedFrame';
 import ContainerNode from 'model/nodes/ContainerNode';
+import SyncedFrameNode from 'model/nodes/ContainerNode';
+import DIRECTIONS from 'model/utils/Directions';
 import { TestSyncedFrameNode } from './SyncedFrameNode.test';
 
 export class TestContainerNode extends ContainerNode {
   doLayout() { return; }
+
+  getInDirection(fromChild: SyncedFrameNode, direction: DIRECTIONS) {
+    return undefined;
+  }
 
   exposedGetChildrenToLayout() {
     return this.getChildrenToLayout();
