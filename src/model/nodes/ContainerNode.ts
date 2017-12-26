@@ -12,7 +12,7 @@ export default abstract class ContainerNode extends SyncedFrameNode {
     }
   }
 
-  protected getChildrenToLayout(): SyncedFrameNode[] {
+  getChildrenToLayout(): SyncedFrameNode[] {
     return this.getChildren()
       .map(child => <SyncedFrameNode>child)
       .filter(child => !child.hidden);

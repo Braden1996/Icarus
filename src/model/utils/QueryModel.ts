@@ -1,7 +1,9 @@
 import ContainerNode from "../nodes/ContainerNode";
 import TreeNode from "../nodes/TreeNode";
+import TileNode from "../nodes/TileNode";
 import SyncedFrameNode from "../nodes/SyncedFrameNode";
 import WindowNode, { ManagedWindow } from "../nodes/WindowNode";
+import DIRECTIONS, { HORIZONTAL_DIRECTIONS } from './Directions';
 
 export type ScreenModels  = { [hash: number]: ContainerNode }
 
