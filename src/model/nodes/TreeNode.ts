@@ -25,14 +25,12 @@ export default abstract class TreeNode {
   }
 
   remove() {
-    if (this.parent) {
-      let insertIndex = this.parent.findChildIndex(child => child === this);
-      for (let child of this.children) {
-        this.parent.insertChild(child, insertIndex);
-        insertIndex += 1;
-      }
-      this.parent.removeChild(this);
+    const insertIndex = this.parent!.findChildIndex(child => child === this);
+    for (const child of this.children.reverse()) {
+      child.parent = null;
+      this.parent!.insertChild(child, insertIndex);
     }
+    this.parent!.removeChild(this);
   }
 
   getChildren() {

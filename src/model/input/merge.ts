@@ -1,3 +1,5 @@
+import CONFIG from 'config';
+import SyncedFrame from '../frames/SyncedFrame';
 import ContainerNode from "../nodes/ContainerNode";
 import SyncedFrameNode from "../nodes/SyncedFrameNode";
 import TileNode from "../nodes/TileNode";
@@ -9,32 +11,54 @@ export function mergeNode(
   managedType: QueryableType,
   direction: DIRECTIONS
 ) {
-
   const allModels = Object.values(models);
   const theNode = <SyncedFrameNode>(QueryModel(allModels).get(managedType));
   if (theNode === undefined) return;
-  if (theNode.parent === null) return;
 
-  const parent = <ContainerNode>theNode.parent;
-  const siblings = parent.getChildren();
-  if (siblings.length <= 2) return;
-  const theNodeIndex = siblings.findIndex(node => node === theNode);
+  const directionNode = (<ContainerNode>theNode.parent)
+    .getInDirection(theNode, direction);
+  if (directionNode === undefined) return;
 
-  if (parent instanceof TileNode) {
-    let targetSibling;
-    if ([DIRECTIONS.LEFT, DIRECTIONS.TOP].includes(direction)) {
-      if (theNodeIndex !== 0) {
-        targetSibling = siblings[theNodeIndex - 1];
-      }
-    } else {
-      if (theNodeIndex !== (siblings.length - 1)) {
-        targetSibling = siblings[theNodeIndex + 1];
-      }
-    }
+  const oldParent = <ContainerNode>theNode.parent;
+  const oldDirectionNodeParent = <ContainerNode>directionNode.parent;
 
-    if (targetSibling) {
-      theNode.addChild(targetSibling);
-      parent.doLayout();
-    }
+  // Check if already merged.
+  if (oldParent === oldDirectionNodeParent
+    && oldParent.getChildren().length === 2) {
+    return;
   }
+
+  if (directionNode instanceof ContainerNode) {
+    if (directionNode instanceof TileNode
+      && ((directionNode.horizontalLayout && direction === DIRECTIONS.RIGHT)
+        || (!directionNode.horizontalLayout && direction === DIRECTIONS.BOTTOM)
+    )) {
+      directionNode.insertChild(theNode, 0);
+    } else {
+      directionNode.addChild(theNode);
+    }
+  } else {
+    const newContainerNode = new CONFIG.DEFAULT_CONTAINER(new SyncedFrame());
+
+    if (oldParent instanceof TileNode
+      &&  newContainerNode instanceof TileNode
+    ) {
+      newContainerNode.horizontalLayout = oldParent.horizontalLayout;
+    }
+
+    if (directionNode.parent) {
+      directionNode.parent.replaceChild(directionNode, newContainerNode);
+    }
+
+    newContainerNode.addChild(directionNode);
+    newContainerNode.addChild(theNode);
+  }
+
+  oldParent.doLayout();
+  if (!oldDirectionNodeParent.findAncestor(node => node === oldParent)) {
+    oldDirectionNodeParent.doLayout();
+  }
+
+  const logObject = { direction, theNode, directionNode };
+  CONFIG.DEBUG('mergeNode2', logObject);
 }

@@ -5,4 +5,9 @@ enum DIRECTIONS {
   RIGHT,
 }
 
+export const  HORIZONTAL_DIRECTIONS: DIRECTIONS[] = [
+  DIRECTIONS.LEFT,
+  DIRECTIONS.RIGHT,
+];
+
 export default DIRECTIONS;
