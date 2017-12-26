@@ -9,7 +9,7 @@ export interface SyncedFrameNodeJSON extends TreeNodeJSON {
 
 export default abstract class SyncedFrameNode extends TreeNode {
   hidden = false;
-  protected _outerGaps = 0;
+  protected _outerGaps: number = 0;
   private nextOuterGaps: number | null = null;
   private outerGapsDirty = true;
 
@@ -77,7 +77,7 @@ export default abstract class SyncedFrameNode extends TreeNode {
     if (!this.isFrameDirty()) return;
 
     this.outerGapsDirty = false;
-    this._outerGaps = this.nextOuterGaps!;
+    this._outerGaps = this.nextOuterGaps || 0;
     this.nextOuterGaps = null;
   }
 }
