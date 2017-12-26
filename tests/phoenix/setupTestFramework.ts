@@ -1,0 +1,1 @@
+Phoenix.log = (output: string) => {};

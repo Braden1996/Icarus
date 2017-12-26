@@ -22,6 +22,10 @@
     "ts-jest": "^21.2.4"
   },
   "jest": {
+    "globals": {
+      "Phoenix": { "log": "" }
+    },
+    "setupTestFrameworkScriptFile": "./tests/phoenix/setupTestFramework.ts",
     "transform": {
       "^.+\\.tsx?$": "ts-jest"
     },
