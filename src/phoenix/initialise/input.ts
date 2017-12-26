@@ -33,13 +33,13 @@ function registerAllInput(models: ScreenModels) {
       const focussedWindow = getFocussedWindow();
       if (focussedWindow) mergeNode(models, focussedWindow, LEFT);
     }),
-    mergeNodeTop: Key.on('j', modifier, () => {
-      const focussedWindow = getFocussedWindow();
-      if (focussedWindow) mergeNode(models, focussedWindow, TOP);
-    }),
-    mergeNodeBottom: Key.on('k', modifier, () => {
+    mergeNodeBottom: Key.on('j', modifier, () => {
       const focussedWindow = getFocussedWindow();
       if (focussedWindow) mergeNode(models, focussedWindow, BOTTOM);
+    }),
+    mergeNodeTop: Key.on('k', modifier, () => {
+      const focussedWindow = getFocussedWindow();
+      if (focussedWindow) mergeNode(models, focussedWindow, TOP);
     }),
     mergeNodeRight: Key.on('l', modifier, () => {
       const focussedWindow = getFocussedWindow();
