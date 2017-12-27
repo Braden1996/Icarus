@@ -4,7 +4,8 @@ import {
   increaseGaps,
   decreaseGaps,
   toggleAxis,
-  mergeNode
+  swapNode,
+  mergeNode,
 } from 'model/input';
 import { ScreenModels } from 'model/utils/QueryModel';
 import DIRECTIONS from 'model/utils/Directions';
@@ -13,6 +14,13 @@ import { getFocussedWindow } from '../utils/helpers';
 const { LEFT, TOP, BOTTOM, RIGHT } = DIRECTIONS;
 
 const modifier = <Phoenix.ModifierKey[]>[ 'ctrl', 'shift', 'alt' ];
+
+enum NODE_MOVE_MODES {
+  SWAP,
+  MERGE,
+}
+
+let nodeMoveMode = NODE_MOVE_MODES.SWAP;
 
 function registerAllInput(models: ScreenModels) {
   return {
@@ -29,21 +37,51 @@ function registerAllInput(models: ScreenModels) {
       const focussedWindow = getFocussedWindow();
       if (focussedWindow) toggleAxis(models, focussedWindow);
     }),
-    mergeNodeLeft: Key.on('h', modifier, () => {
-      const focussedWindow = getFocussedWindow();
-      if (focussedWindow) mergeNode(models, focussedWindow, LEFT);
+    nodeActionSwapMode: Key.on('s', modifier, () => {
+      nodeMoveMode = NODE_MOVE_MODES.SWAP;
     }),
-    mergeNodeBottom: Key.on('j', modifier, () => {
-      const focussedWindow = getFocussedWindow();
-      if (focussedWindow) mergeNode(models, focussedWindow, BOTTOM);
+    nodeActionMergeMode: Key.on('m', modifier, () => {
+      nodeMoveMode = NODE_MOVE_MODES.MERGE;
     }),
-    mergeNodeTop: Key.on('k', modifier, () => {
+    nodeLeft: Key.on('h', modifier, () => {
       const focussedWindow = getFocussedWindow();
-      if (focussedWindow) mergeNode(models, focussedWindow, TOP);
+      if (focussedWindow) {
+        if (nodeMoveMode === NODE_MOVE_MODES.SWAP){
+          swapNode(models, focussedWindow, LEFT);
+        } else if (nodeMoveMode === NODE_MOVE_MODES.MERGE){
+          mergeNode(models, focussedWindow, LEFT);
+        }
+      }
     }),
-    mergeNodeRight: Key.on('l', modifier, () => {
+    nodeBottom: Key.on('j', modifier, () => {
       const focussedWindow = getFocussedWindow();
-      if (focussedWindow) mergeNode(models, focussedWindow, RIGHT);
+      if (focussedWindow) {
+        if (nodeMoveMode === NODE_MOVE_MODES.SWAP){
+          swapNode(models, focussedWindow, BOTTOM);
+        } else if (nodeMoveMode === NODE_MOVE_MODES.MERGE){
+          mergeNode(models, focussedWindow, BOTTOM);
+        }
+      }
+    }),
+    nodeTop: Key.on('k', modifier, () => {
+      const focussedWindow = getFocussedWindow();
+      if (focussedWindow) {
+        if (nodeMoveMode === NODE_MOVE_MODES.SWAP){
+          swapNode(models, focussedWindow, TOP);
+        } else if (nodeMoveMode === NODE_MOVE_MODES.MERGE){
+          mergeNode(models, focussedWindow, TOP);
+        }
+      }
+    }),
+    nodeRight: Key.on('l', modifier, () => {
+      const focussedWindow = getFocussedWindow();
+      if (focussedWindow) {
+        if (nodeMoveMode === NODE_MOVE_MODES.SWAP){
+          swapNode(models, focussedWindow, RIGHT);
+        } else if (nodeMoveMode === NODE_MOVE_MODES.MERGE){
+          mergeNode(models, focussedWindow, RIGHT);
+        }
+      }
     }),
   }
 }

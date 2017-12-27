@@ -42,7 +42,7 @@ export default abstract class TreeNode {
   }
 
   removeChild(child: TreeNode) {
-    child.parent = null;
+    if (child.parent === this ) child.parent = null;
     this.children = this.children.filter(c => c !== child);
   }
 
@@ -59,10 +59,24 @@ export default abstract class TreeNode {
   }
 
   swapChild(child1: TreeNode, child2: TreeNode) {
-    const child1Index = this.findChildIndex(child => child === child1);
-    const child2Index = this.findChildIndex(child => child === child2);
-    this.children[child1Index] = child2;
-    this.children[child2Index] = child1;
+    const parent1 = child1.parent!;
+    const parent2 = child2.parent!;
+    const child1Index = parent1.findChildIndex(child => child === child1);
+    const child2Index = parent2.findChildIndex(child => child === child2);
+
+    if (parent1 === parent2) {
+      this.children[child1Index] = child2;
+      this.children[child2Index] = child1;
+    } else {
+      // Prevent automatic child removal from parent.
+      child1.parent = null;
+      child2.parent = null;
+
+      parent1.insertChild(child2, child1Index);
+      parent2.insertChild(child1, child2Index);
+      parent1.removeChild(child1);
+      parent2.removeChild(child2);
+    }
   }
 
   find(comparisonFunction: (node: TreeNode) => boolean): TreeNode | undefined {

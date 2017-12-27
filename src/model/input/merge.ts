@@ -59,6 +59,5 @@ export function mergeNode(
     oldDirectionNodeParent.doLayout();
   }
 
-  const logObject = { direction, theNode, directionNode };
-  CONFIG.DEBUG('mergeNode2', logObject);
+  CONFIG.DEBUG('mergeNode', { direction, theNode, directionNode });
 }
