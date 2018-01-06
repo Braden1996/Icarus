@@ -4,7 +4,7 @@ export interface TreeNodeJSON {
 }
 
 export default abstract class TreeNode {
-  parent: TreeNode | null;
+  parent: TreeNode | null = null;
   private children: TreeNode[] = [];
 
   toString() {
@@ -42,7 +42,7 @@ export default abstract class TreeNode {
   }
 
   removeChild(child: TreeNode) {
-    if (child.parent === this ) child.parent = null;
+    if (child.parent === this) child.parent = null;
     this.children = this.children.filter(c => c !== child);
   }
 

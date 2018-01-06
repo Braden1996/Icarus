@@ -1,7 +1,4 @@
-<<<<<<< HEAD
-=======
 import CONFIG from 'config';
->>>>>>> 436c51e... Fix bug causing `CONFIG.DEFAULT_CONTAINER` to be `undefined`.
 import DIRECTIONS, { HORIZONTAL_DIRECTIONS } from '../utils/Directions';
 import ContainerNode from './ContainerNode';
 import SyncedFrameNode, { SyncedFrameNodeJSON } from './SyncedFrameNode';

@@ -12,7 +12,7 @@ export default abstract class ContainerNode extends SyncedFrameNode {
     super.removeChild(child);
 
     const children = this.getChildren();
-    if (this.parent !== undefined && children.length <= 1) {
+    if (this.parent !== null && children.length <= 1) {
       this.remove();
     }
   }
