@@ -30,7 +30,7 @@ export function mergeNode(
   if (directionNode instanceof ContainerNode) {
     if (directionNode instanceof TileNode
       && ((directionNode.horizontalLayout && direction === DIRECTIONS.RIGHT)
-        || (!directionNode.horizontalLayout && direction === DIRECTIONS.BOTTOM)
+        || (!directionNode.horizontalLayout && direction === DIRECTIONS.DOWN)
     )) {
       directionNode.insertChild(theNode, 0);
     } else {

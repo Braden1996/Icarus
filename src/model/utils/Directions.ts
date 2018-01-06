@@ -4,8 +4,8 @@ import TileNode from '../nodes/TileNode';
 
 enum DIRECTIONS {
   LEFT,
-  TOP,
-  BOTTOM,
+  UP,
+  DOWN,
   RIGHT,
 }
 
@@ -30,7 +30,7 @@ export function getNodeInDirection(
       if (theNodeIndex === -1) return undefined;
 
       const adjacentOffset =
-        [DIRECTIONS.LEFT, DIRECTIONS.TOP].includes(direction) ? -1 : 1;
+        [DIRECTIONS.LEFT, DIRECTIONS.UP].includes(direction) ? -1 : 1;
       const index = theNodeIndex + adjacentOffset
 
       if (index >= 0 && index < children.length) return children[index];

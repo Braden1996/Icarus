@@ -11,7 +11,7 @@ import { ScreenModels } from 'model/utils/QueryModel';
 import DIRECTIONS from 'model/utils/Directions';
 import { getFocussedWindow } from '../utils/helpers';
 
-const { LEFT, TOP, BOTTOM, RIGHT } = DIRECTIONS;
+const { LEFT, UP, DOWN, RIGHT } = DIRECTIONS;
 
 const modifier = <Phoenix.ModifierKey[]>[ 'ctrl', 'shift', 'alt' ];
 
@@ -53,23 +53,23 @@ function registerAllInput(models: ScreenModels) {
         }
       }
     }),
-    nodeBottom: Key.on('j', modifier, () => {
+    nodeUp: Key.on('k', modifier, () => {
       const focussedWindow = getFocussedWindow();
       if (focussedWindow) {
         if (nodeMoveMode === NODE_MOVE_MODES.SWAP){
-          swapNode(models, focussedWindow, BOTTOM);
+          swapNode(models, focussedWindow, UP);
         } else if (nodeMoveMode === NODE_MOVE_MODES.MERGE){
-          mergeNode(models, focussedWindow, BOTTOM);
+          mergeNode(models, focussedWindow, UP);
         }
       }
     }),
-    nodeTop: Key.on('k', modifier, () => {
+    nodeDown: Key.on('j', modifier, () => {
       const focussedWindow = getFocussedWindow();
       if (focussedWindow) {
         if (nodeMoveMode === NODE_MOVE_MODES.SWAP){
-          swapNode(models, focussedWindow, TOP);
+          swapNode(models, focussedWindow, DOWN);
         } else if (nodeMoveMode === NODE_MOVE_MODES.MERGE){
-          mergeNode(models, focussedWindow, TOP);
+          mergeNode(models, focussedWindow, DOWN);
         }
       }
     }),
