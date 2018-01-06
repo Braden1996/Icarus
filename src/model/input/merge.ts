@@ -3,7 +3,7 @@ import SyncedFrame from '../frames/SyncedFrame';
 import ContainerNode from "../nodes/ContainerNode";
 import SyncedFrameNode from "../nodes/SyncedFrameNode";
 import TileNode from "../nodes/TileNode";
-import DIRECTIONS from '../utils/Directions';
+import DIRECTIONS, { getNodeInDirection } from '../utils/Directions';
 import QueryModel, { QueryableType, ScreenModels } from "../utils/QueryModel";
 
 export function mergeNode(
@@ -15,8 +15,7 @@ export function mergeNode(
   const theNode = <SyncedFrameNode>(QueryModel(allModels).get(managedType));
   if (theNode === undefined) return;
 
-  const directionNode = (<ContainerNode>theNode.parent)
-    .getInDirection(theNode, direction);
+  const directionNode = getNodeInDirection(theNode, direction);
   if (directionNode === undefined) return;
 
   const oldParent = <ContainerNode>theNode.parent;

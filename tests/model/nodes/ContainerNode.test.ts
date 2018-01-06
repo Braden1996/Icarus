@@ -7,10 +7,6 @@ import { TestSyncedFrameNode } from './SyncedFrameNode.test';
 export class TestContainerNode extends ContainerNode {
   doLayout() { return; }
 
-  getInDirection(fromChild: SyncedFrameNode, direction: DIRECTIONS) {
-    return undefined;
-  }
-
   exposedGetChildrenToLayout() {
     return this.getChildrenToLayout();
   }

@@ -1,5 +1,4 @@
 import CONFIG from 'config';
-import DIRECTIONS, { HORIZONTAL_DIRECTIONS } from '../utils/Directions';
 import ContainerNode from './ContainerNode';
 import SyncedFrameNode, { SyncedFrameNodeJSON } from './SyncedFrameNode';
 
@@ -135,24 +134,5 @@ export default class TileNode extends ContainerNode {
         width,
         height: height - totalChildExtraSize - totalInnerGaps,
       }
-  }
-
-  getInDirection(fromChild: SyncedFrameNode, direction: DIRECTIONS) {
-    const horizontal = HORIZONTAL_DIRECTIONS.includes(direction);
-    if (this.horizontalLayout === horizontal) {
-      const children = this.getChildrenToLayout();
-      const theNodeIndex = children.findIndex(node => node === fromChild);
-      if (theNodeIndex === -1) return undefined;
-
-      const adjacentOffset =
-        [DIRECTIONS.LEFT, DIRECTIONS.TOP].includes(direction) ? -1 : 1;
-      const index = theNodeIndex + adjacentOffset
-
-      if (index >= 0 && index < children.length) return children[index];
-    }
-
-    return this.parent === undefined
-      ? undefined
-      : (<ContainerNode>this.parent).getInDirection(this, direction);
   }
 }
