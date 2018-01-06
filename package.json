@@ -18,12 +18,16 @@
   },
   "devDependencies": {
     "@types/jest": "^21.1.8",
+    "@types/xml2js": "^0.4.2",
     "jest": "^21.2.1",
-    "ts-jest": "^21.2.4"
+    "ts-jest": "^21.2.4",
+    "xml2js": "^0.4.19"
   },
   "jest": {
     "globals": {
-      "Phoenix": { "log": "" }
+      "Phoenix": {
+        "log": ""
+      }
     },
     "setupTestFrameworkScriptFile": "./tests/phoenix/setupTestFramework.ts",
     "transform": {
