@@ -1,6 +1,8 @@
 import ContainerNode from '../nodes/ContainerNode';
 import SyncedFrameNode from '../nodes/SyncedFrameNode';
 import TileNode from '../nodes/TileNode';
+import WindowNode from '../nodes/WindowNode';
+import { Frame } from '../frames/SyncedFrame';
 
 enum DIRECTIONS {
   LEFT,
@@ -37,5 +39,41 @@ export function getNodeInDirection(
     }
 
     return container.parent ? getNodeInDirection(container, direction) : undefined;
+  }
+}
+
+
+export function findWindows(child: SyncedFrameNode) {
+  return child instanceof WindowNode;
+}
+
+type Frame1D = { x: number, width: number };
+const collision = (line1: Frame1D, line2: Frame1D) =>
+  line1.x < line2.x + line2.width &&
+  line1.width + line1.x > line2.x;
+
+export function findInDirection(
+  fromChild: SyncedFrameNode,
+  direction: DIRECTIONS,
+  findFunction: (node: SyncedFrameNode) => boolean
+): SyncedFrameNode | undefined {
+  const fromFrame1D: Frame1D = HORIZONTAL_DIRECTIONS.includes(direction)
+    ? { x: fromChild.getFrame().y, width: fromChild.getFrame().height }
+    : { x: fromChild.getFrame().x, width: fromChild.getFrame().width };
+
+  const directionNode = getNodeInDirection(fromChild, direction);
+  if (directionNode === undefined) return;
+  if (findFunction(directionNode)) return directionNode;
+
+  if (directionNode instanceof ContainerNode) {
+    const layoutChildren = directionNode.getChildrenToLayout();
+    return <SyncedFrameNode | undefined>directionNode.findChild((child) => {
+      const frameChild = <SyncedFrameNode>child;
+      if (!layoutChildren.includes(frameChild)) return false;
+      const cFrame1D: Frame1D = HORIZONTAL_DIRECTIONS.includes(direction)
+        ? { x: frameChild.getFrame().y, width: frameChild.getFrame().height }
+        : { x: frameChild.getFrame().x, width: frameChild.getFrame().width };
+      return collision(fromFrame1D, cFrame1D) && findFunction(frameChild);
+    });
   }
 }

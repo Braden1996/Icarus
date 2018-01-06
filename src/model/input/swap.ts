@@ -3,7 +3,7 @@ import SyncedFrame from '../frames/SyncedFrame';
 import ContainerNode from "../nodes/ContainerNode";
 import SyncedFrameNode from "../nodes/SyncedFrameNode";
 import TileNode from "../nodes/TileNode";
-import DIRECTIONS, { getNodeInDirection } from '../utils/Directions';
+import DIRECTIONS, { findWindows, findInDirection } from '../utils/Directions';
 import QueryModel, { QueryableType, ScreenModels } from "../utils/QueryModel";
 
 export function swapNode(
@@ -15,7 +15,7 @@ export function swapNode(
   const theNode = <SyncedFrameNode>(QueryModel(allModels).get(managedType));
   if (theNode === undefined) return;
 
-  const directionNode = getNodeInDirection(theNode, direction);
+  const directionNode = findInDirection(theNode, direction, findWindows);
   if (directionNode === undefined) return;
 
   const parent = <ContainerNode>theNode.parent;
