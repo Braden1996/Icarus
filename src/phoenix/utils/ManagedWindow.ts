@@ -23,7 +23,8 @@ export default class PhoenixManagedWindow extends ManagedWindow {
   }
 
   isValid() {
-    return this.phoenixWindow.isNormal()
-      && (this.phoenixWindow.isVisible() || this.phoenixWindow.isMinimized());
+    return this.phoenixWindow.spaces().length === 1
+      && this.phoenixWindow.isNormal()
+      && !this.phoenixWindow.app().isHidden();
   }
 }
