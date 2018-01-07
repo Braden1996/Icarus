@@ -5,7 +5,8 @@ function mapVariable(someVariable: any, depth = Infinity): any {
   if (!(someVariable instanceof Object)) {
     return someVariable;
   } else if (depth < 0) {
-    return someVariable.toString();
+    const toString = someVariable.toString();
+    return toString !== null ? toString : someVariable;
   } else {
     if (isApp(someVariable)) {
       return mapVariable({
@@ -27,6 +28,7 @@ function mapVariable(someVariable: any, depth = Infinity): any {
         isMinimized: someVariable.isMinimized(),
         isNormal: someVariable.isNormal(),
         isVisible: someVariable.isVisible(),
+        spaces: someVariable.spaces(),
         app: someVariable.app(),
       }, depth === Infinity ? 3 : depth);
 
@@ -44,6 +46,9 @@ function mapVariable(someVariable: any, depth = Infinity): any {
       return Object.assign({}, ...Object.keys(someVariable).map(
         k => ({[k]: mapVariable(someVariable[k], depth - 1)})
       ));
+    } else {
+      const toString = someVariable.toString();
+      return toString !== null ? toString : someVariable;
     }
   }
 }
