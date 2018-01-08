@@ -29,7 +29,7 @@ function registerAllEvents(models: ScreenModels) {
     closeWindowRemoveFromLayout: Event.on('windowDidClose', (theWindow) => {
       CONFIG.DEBUG('windowDidClose', theWindow);
       const managedWindow = new PhoenixManagedWindow(theWindow);
-      if (managedWindow.isValid()) windowRemoveFromParent(models, managedWindow);
+      windowRemoveFromParent(models, managedWindow);
     }),
     openWindowAddToLayout: Event.on('windowDidOpen', (theWindow) => {
       CONFIG.DEBUG('windowDidOpen', theWindow);
